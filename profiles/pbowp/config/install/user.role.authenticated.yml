@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  0: 'access content'
+  1: 'use text format basic_html'
+  2: 'access comments'
+  3: 'post comments'
+  4: 'skip comment approval'
+  5: 'access site-wide contact form'
+  6: 'access shortcuts'
+  7: 'search content'
+  8: 'flag case_request'
+  9: 'unflag case_request'
+  10: 'skip CAPTCHA'
+  12: 'view own unpublished content'
+  14: 'flag conflict_check'

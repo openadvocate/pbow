@@ -1,0 +1,82 @@
+From 39a2ccb6e6dfc007a3d07cfbbb9b7b83e91ac255 Mon Sep 17 00:00:00 2001
+From: Samuel <samuel@bodeboca.com>
+Date: Tue, 18 Oct 2016 15:23:18 +0200
+Subject: [PATCH] Issue #2819793: Can't send mail: Non-existent service
+ "smtp.logger.channel"
+
+---
+ src/Plugin/Mail/SMTPMailSystem.php | 41 +++++++++++++++++++-------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
+
+diff --git a/src/Plugin/Mail/SMTPMailSystem.php b/src/Plugin/Mail/SMTPMailSystem.php
+index 95e03d7..2579303 100644
+--- a/src/Plugin/Mail/SMTPMailSystem.php
++++ b/src/Plugin/Mail/SMTPMailSystem.php
+@@ -3,6 +3,7 @@
+ namespace Drupal\smtp\Plugin\Mail;
+ 
+ use Drupal\Component\Utility\Unicode;
++use Drupal\Core\Logger\LoggerChannelFactoryInterface;
+ use Drupal\Core\Mail\MailFormatHelper;
+ use Drupal\Core\Mail\MailInterface;
+ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+@@ -37,12 +38,31 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
+    * @param $plugin_definition
+    * @param \Psr\Log\LoggerInterface $logger
+    */
+-  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerInterface $logger) {
++  public function __construct(array $configuration, $plugin_id, $plugin_definition, LoggerChannelFactoryInterface $logger) {
+     $this->smtpConfig = \Drupal::config('smtp.settings');
+     $this->logger = $logger;
+   }
+ 
+   /**
++   * Creates an instance of the plugin.
++   *
++   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
++   *   The container to pull out services used in the plugin.
++   * @param array $configuration
++   *   A configuration array containing information about the plugin instance.
++   * @param string $plugin_id
++   *   The plugin ID for the plugin instance.
++   * @param mixed $plugin_definition
++   *   The plugin implementation definition.
++   *
++   * @return static
++   *   Returns an instance of this plugin.
++   */
++  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
++    return new static($configuration, $plugin_id, $plugin_definition, $container->get('logger.factory'));
++  }
++
++  /**
+    * Concatenate and wrap the e-mail body for either
+    * plain-text or HTML emails.
+    *
+@@ -615,23 +635,4 @@ class SMTPMailSystem implements MailInterface, ContainerFactoryPluginInterface {
+ 
+     return $components;
+   }
+-
+-  /**
+-   * Creates an instance of the plugin.
+-   *
+-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+-   *   The container to pull out services used in the plugin.
+-   * @param array $configuration
+-   *   A configuration array containing information about the plugin instance.
+-   * @param string $plugin_id
+-   *   The plugin ID for the plugin instance.
+-   * @param mixed $plugin_definition
+-   *   The plugin implementation definition.
+-   *
+-   * @return static
+-   *   Returns an instance of this plugin.
+-   */
+-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+-    return new static($configuration, $plugin_id, $plugin_definition, $container->get('smtp.logger.channel'));
+-  }
+ }
+-- 
+2.7.4
+

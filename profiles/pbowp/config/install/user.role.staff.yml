@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: staff
+label: Staff
+weight: 3
+is_admin: null
+permissions:
+  - 'create case content'
+  - 'edit any case content'
+  - 'edit own case content'
+  - 'access user profiles'
+  - 'administer users'

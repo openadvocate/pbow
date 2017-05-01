@@ -1,0 +1,5 @@
+pbow_user_import.import:
+  title: Import
+  route_name: pbow_user_import.import
+  base_route: entity.user.collection
+  weight: 15

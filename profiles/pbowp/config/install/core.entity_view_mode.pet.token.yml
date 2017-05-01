@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pet
+id: pet.token
+label: Token
+targetEntityType: pet
+cache: true

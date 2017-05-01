@@ -1,0 +1,5 @@
+name: PBOW Join
+type: module
+description: Membership join process
+core: 8.x
+package: PBOW

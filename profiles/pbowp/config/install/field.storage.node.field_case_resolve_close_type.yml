@@ -1,0 +1,71 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_case_resolve_close_type
+field_name: field_case_resolve_close_type
+entity_type: node
+type: list_integer
+settings:
+  allowed_values:
+    -
+      value: 1
+      label: 'A - Counsel and Advice'
+    -
+      value: 2
+      label: 'B - Brief Service/Limited Action'
+    -
+      value: 3
+      label: 'F - Negotiated Settlement without Litigation'
+    -
+      value: 4
+      label: 'G - Negotiated Settlement with Litigation'
+    -
+      value: 5
+      label: 'H - Administrative Agency Decision'
+    -
+      value: 6
+      label: 'Ia - Uncontested Court Decision'
+    -
+      value: 7
+      label: 'Ib - Contested Court Decision'
+    -
+      value: 8
+      label: 'Ic - Appeals'
+    -
+      value: 9
+      label: 'K - Other'
+    -
+      value: 10
+      label: 'L - Extensive Service (not FGHI)'
+    -
+      value: 11
+      label: 'Xa - Client Withdrew before Legal Assistance'
+    -
+      value: 12
+      label: 'Xb - Client gave incorrect information at Intake - Not eligible'
+    -
+      value: 13
+      label: 'Xc - Administrative or Computer Error'
+    -
+      value: 14
+      label: 'Xd - Duplicate Case'
+    -
+      value: 15
+      label: 'Xe - Not timely closed'
+    -
+      value: 16
+      label: 'Xf -  Required documentation not present'
+    -
+      value: 17
+      label: 'Xg - Deselect-Other Reason (indicate in notes)'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,6 @@
+name: PBOW User Import
+type: module
+description: 'Mass user importer.'
+package: PBOW
+# version: VERSION
+core: 8.x

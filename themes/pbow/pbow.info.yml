@@ -1,0 +1,31 @@
+core: 8.x
+type: theme
+base theme: bootstrap
+
+name: 'pbow'
+description: 'PBOW theme Uses the Bootstrap framework LESS source files and must be compiled.'
+package: 'Bootstrap'
+
+regions:
+  navigation: 'Navigation'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  navigation_admin: 'Navigation Admin'
+  header: 'Top Bar'
+  highlighted: 'Highlighted'
+  help: 'Help'
+  band1: 'Homepage Band 1'
+  band2: 'Homepage Band 2'
+  band3: 'Homepage Band 3'
+  band4: 'Homepage Band 4'
+  band5: 'Homepage Band 5'
+  band6: 'Homepage Band 6'
+  content: 'Content'
+  sidebar_first: 'Primary'
+  sidebar_second: 'Secondary'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+
+libraries:
+  - 'pbow/global-styling'
+  - 'pbow/bootstrap-scripts'

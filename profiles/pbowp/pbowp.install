@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for the profilename install profile.
+ */
+
+/**
+ * Implements hook_install().
+ *
+ * @see system_install()
+ */
+function pbowp_install() {
+}

@@ -1,0 +1,7 @@
+pbow_case.import_csv:
+  path: '/import/csv'
+  defaults:
+    _form: 'Drupal\pbow_case\Form\CaseCsvImportForm'
+    _title: 'Case Import via CSV'
+  requirements:
+    _permission: 'create case content'

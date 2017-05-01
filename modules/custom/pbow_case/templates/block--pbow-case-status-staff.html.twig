@@ -1,0 +1,490 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block.
+ *
+ * Available variables:
+ * - $block->subject: Block title.
+ * - $content: Block content.
+ * - $block->module: Module that generated the block.
+ * - $block->delta: An ID for the block, unique within each module.
+ * - $block->region: The block region embedding the current block.
+ * - $classes: String of classes that can be used to style contextually through
+ *   CSS. It can be manipulated through the variable $classes_array from
+ *   preprocess functions. The default values can be one or more of the
+ *   following:
+ *   - block: The current template type, i.e., "theming hook".
+ *   - block-[module]: The module generating the block. For example, the user
+ *     module is responsible for handling the default user navigation block. In
+ *     that case the class would be 'block-user'.
+ * - $title_prefix (array): An array containing additional output populated by
+ *   modules, intended to be displayed in front of the main title tag that
+ *   appears in the template.
+ * - $title_suffix (array): An array containing additional output populated by
+ *   modules, intended to be displayed after the main title tag that appears in
+ *   the template.
+ *
+ * Helper variables:
+ * - $classes_array: Array of html class attribute values. It is flattened
+ *   into a string within the variable $classes.
+ * - $block_zebra: Outputs 'odd' and 'even' dependent on each block region.
+ * - $zebra: Same output as $block_zebra but independent of any block region.
+ * - $block_id: Counter dependent on each block region.
+ * - $id: Same output as $block_id but independent of any block region.
+ * - $is_front: Flags true when presented in the front page.
+ * - $logged_in: Flags true when the current user is a logged-in member.
+ * - $is_admin: Flags true when the current user is an administrator.
+ * - $block_html_id: A valid HTML ID and guaranteed unique.
+ *
+ * @ingroup templates
+ *
+ * @see bootstrap_preprocess_block()
+ * @see template_preprocess()
+ * @see template_preprocess_block()
+ * @see bootstrap_process_block()
+ * @see template_process()
+ */
+#}
+{#%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+    'clearfix',
+  ]
+%#}
+{#
+  * Case statuses *
+    INCOMING  = 10;
+    AVAILABLE = 20;
+    REQUESTED = 30;
+    ASSIGNED  = 40;
+    RESOLVED  = 50;
+    ARCHIVED  = 60;
+#}
+<div class="card overlap_container">
+  <div style="margin-top: 5px;" class="mb30">
+    <h4 class="text-left status_indicator">
+      {% set status = case.field_case_status.value %}
+      <span class="label label-{{ status == 10 ? 'danger'  : 'default' }}">Imported</span>
+      <span class="label label-{{ status == 20 ? 'warning' : 'default' }}">Available</span>
+      <span class="label label-{{ status == 30 ? 'info'    : 'default' }}">Requested</span>
+      <span class="label label-{{ status == 40 ? 'success' : 'default' }}">Assigned</span>
+      <span class="label label-{{ status == 50 ? 'primary' : 'default' }}">Resolved</span>
+      {% if status == 60 %}
+        <span class="label label-warning">Archived</span>
+      {% endif %}
+    </h4>
+  </div>
+
+{# Show if status is >= Imported #}
+{% if status >= 10 %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" href="#" aria-expanded="true" aria-controls="collapseOne">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-6 control-label">Deadline
+              {{ case.field_case_deadline.remaining ? case.field_case_deadline.remaining|raw : '' }}
+            </label>
+            <div class="col-lg-6 text-right">
+              {{ case.field_case_deadline.value
+               ? case.field_case_deadline.value|date('m/d/Y')
+               : 'Not set'}}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+  </div>
+{% endif %}
+
+<div class="panel-group mt30" id="accordion" role="tablist" aria-multiselectable="true">
+
+{# Show if status is >= Imported #}
+{% if status >= 10 %}
+  <div class="panel panel-default ">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="{{ status == 10 ? 'true' : 'false' }}" aria-controls="collapseOne" class="{{ status == 10 ? '' : 'collapsed' }}">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-4 control-label">Imported</label>
+            <div class="col-lg-8 text-right">
+              {{ case.field_case_time_incoming.value
+               ? case.field_case_time_incoming.value|date('m/d/Y')
+               : 'Not set'}}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse {{ status == 10 ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingOne" aria-expanded="{{ status == 10 ? 'true' : 'false' }}">
+      <div class="panel-body">
+        <div>
+          {{ case.field_case_check_all.value ? 'All checks passed.' : 'Checks failed.' }}
+        </div>
+        <div>
+          <em>{{ case.field_case_check_id.value ?: '' }}</em>
+        </div>
+        <div>
+          <em>{{ case.field_case_check_party.value ?: '' }}</em>
+        </div>
+
+        {% if status == 10 and case.field_case_check_all.value %}
+          <div class="row">
+            <div class="col-sm-12">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"><i class="fa fa-right-arrow" aria-hidden="true"></i> Make Available
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 pt20" style="margin-top: 20px; ">
+                  <div class="collapse clearfix" id="collapseArchive">
+                    <div class="well clearfix">
+                      <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
+                      </a>
+                      {{ case.form.avail }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{# Show if status is >= Available #}
+{% if status >= 20 %}
+  <div class="panel panel-default ">
+    <div class="panel-heading" role="tab" id="headingTwo">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="{{ status == 20 ? 'true' : 'false' }}" aria-controls="collapseTwo" class="{{ status == 20 ? '' : 'collapsed' }}">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-4 control-label">Available</label>
+            <div class="col-lg-8 text-right">
+              {{ case.field_case_time_available.value
+               ? case.field_case_time_available.value|date('m/d/Y')
+               : 'Not set'}}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse {{ status == 20 ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingTwo" aria-expanded="{{ status == 20 ? 'true' : 'false' }}">
+      <div class="panel-body">
+        Viewed {{ case.stat.totalcount ?: 0 }} times
+
+        {% if status == 20 %}
+          <div class="row">
+            <div class="col-sm-12">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"><i class="fa fa-inbox" aria-hidden="true"></i> Archive
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 pt20" style="margin-top: 20px; ">
+                  <div class="collapse clearfix" id="collapseArchive">
+                    <div class="well clearfix">
+                      <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
+                      </a>
+                      {{ case.form.archive }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{# Show if status is >= Requested #}
+{% if status >= 30 %}
+  <div class="panel panel-default ">
+    <div class="panel-heading" role="tab" id="headingThree">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="{{ status == 30 ? 'true' : 'false' }}" aria-controls="collapseThree" class="{{ status == 30 ? '' : 'collapsed' }}">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-4 control-label">Requested</label>
+            <div class="col-lg-8 text-right">
+              {{ case.field_case_time_requested.value
+               ? case.field_case_time_requested.value|date('m/d/Y')
+               : 'Not set'}}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseThree" class="panel-collapse collapse {{ status == 30 ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingThree" aria-expanded="{{ status == 30 ? 'true' : 'false' }}">
+      <div class="panel-body">
+          <div class="list-group">
+            {% if case.requests %}
+            {% for req in case.requests %}
+              <a href="#" class="list-group-item add_overlap_card_action" data-overlapcard-id="#requester_overlap" data-requester-info="{{ req.info }}">
+                <h4 class="list-group-item-heading mb0">{{ req.name }}<span class="small"> - {{ req.date }}</span>
+                  <span class="pull-right">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                  </span>
+                </h4>
+              </a>
+            {% endfor %}
+            {% endif %}
+          </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel overlap_card card move_out is_out" id="requester_overlap">
+
+    <div class="row">
+      <div class="col-sm-12 mb10">
+        <button type="button" class="close remove_overlap_card_action" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+    </div>
+
+    <div>
+
+      <div class="row">
+
+        <div class="col-sm-3 pull-left">
+          <a href="user.php">
+            <img src="#" class="img-circle img-thumbnail" style="min-width: 100%;">
+          </a>
+        </div>
+
+        <!-- Profile Stats -->
+        <div class="col-sm-9 mt20">
+          <div class="row">
+            <div class="col-sm-12">
+              <span class="lead req-name"></span>
+            </div>
+            <div class="col-sm-12">Member since <span class="req-since"></span></div>
+            <div class="col-sm-12 req-email"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mb10 mt10">
+        <div class="col-sm-12">
+          <hr>
+          <ul class="list-unstyled pl20">
+            <li class="pb10">
+              <span class="badge req-requested-cnt">#</span>
+              Requested Cases
+            </li>
+            <li class="pb10">
+              <span class="badge req-assigned-cnt">#</span>
+              Assigned Cases
+            </li>
+            <li class="pb10">
+              <span class="badge req-resolved-cnt">#</span>
+              Completed Cases
+            </li>
+          </ul>
+          <hr>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12">
+          <a href="#" class="btn btn-default remove_overlap_card_action">Back</a>
+          <a href="#" class="btn btn-default req-view-profile">View Complete Profile</a>
+          <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> <i class="fa fa-arrow-right" aria-hidden="true"></i> Assign
+          </a>
+        </div>
+      </div>
+      <div class="row">
+
+        <div class="col-sm-12 pt20" style="margin-top: 20px; ">
+          <div class="collapse clearfix" id="collapseExample">
+            <div class="well clearfix">
+              <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> <i class="fa fa-close" aria-hidden="true"></i> Cancel
+              </a>
+              {{ case.form.assign }}
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+{% endif %}
+
+{# Show if status is >= Assigned #}
+{% if status >= 40 %}
+  <div class="panel panel-default ">
+    <div class="panel-heading" role="tab" id="headingFour">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="{{ status == 40 ? 'true' : 'false' }}" aria-controls="collapseFour" class="{{ status == 40 ? '' : 'collapsed' }}">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-4 control-label">Assigned</label>
+            <div class="col-lg-8 text-right">
+              {{ case.field_case_time_assigned.value
+               ? case.field_case_time_assigned.value|date('m/d/Y')
+               : 'Not set'}}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFour" class="panel-collapse collapse {{ status == 40 ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingFour" aria-expanded="{{ status == 40 ? 'true' : 'false' }}">
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-sm-3 pull-left">
+            <img src="{{ case.assigned_picture }}" class="img-circle img-thumbnail" style="min-width: 100%;" alt="TODO">
+          </div>
+          
+          <!-- Profile Stats -->
+          <div class="col-sm-9 mt20">
+            <div class="row">
+              {% set assigned = case.field_case_assigned.0.get('entity').getValue() %}
+              <div class="col-sm-12">
+                <span class="lead">{{ assigned.name.value }}</span>
+              </div>
+              <div class="col-sm-12">
+                Member since {{ assigned.created.value|date('m/d/Y') }}
+              </div>
+              <div class="col-sm-12">
+                {{ assigned.mail.value }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% if status == 40 %}
+          <hr>
+
+          <div class="row">
+            <div class="col-sm-12">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseRevoke" aria-expanded="false" aria-controls="collapseRevoke">Revoke
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 pt20" style="margin-top: 20px; ">
+                  <div class="collapse clearfix" id="collapseRevoke">
+                    <div class="well clearfix">
+                      <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseRevoke" aria-expanded="false" aria-controls="collapseRevoke"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
+                      </a>
+                      {{ case.form.revoke }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{# Show if status is >= Resolved #}
+{% if status >= 50 %}
+  <div class="panel panel-default ">
+    <div class="panel-heading" role="tab" id="headingFifth">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFifth" aria-expanded="{{ status == 50 ? 'true' : 'false' }}" aria-controls="collapseFifth" class="{{ status == 50 ? '' : 'collapsed' }}">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-4 control-label">Resolved</label>
+            <div class="col-lg-8 text-right">
+              {{ case.field_case_time_completed.value
+               ? case.field_case_time_completed.value|date('m/d/Y')
+               : 'Not set'}}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFifth" class="panel-collapse collapse {{ status == 50 ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingFifth" aria-expanded="{{ status == 50 ? 'true' : 'false' }}">
+      <div class="panel-body">
+        <div>
+          <label>Resolved by:</label>
+          <div class="lead">
+            {{ case.field_case_assigned.entity.name.value }}
+          </div>
+        </div>
+        <div>
+          <label>Date of Closure:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_date.value
+             ? case.field_case_resolve_date.value|date('F j, Y')
+             : 'Not set' }}
+          </div>
+        </div>
+        <div>
+          <label>Hours:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_hours_att.value + case.field_case_resolve_hours_para.value}}
+            ({{ case.field_case_resolve_hours_att.value}} att. + {{ case.field_case_resolve_hours_para.value }} para.)
+          </div>
+        </div>
+        <div>
+          <label>Closing Outcome:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_outcome.value_print }}
+          </div>
+        </div>
+        <div>
+          <label>Close Reason:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_close_type.value_print }}
+          </div>
+        </div>
+        <div>
+          <label>Closing notes:</label>
+          <div class="">
+            {{ case.field_case_resolve_note.value|nl2br }}
+          </div>
+        </div>
+
+        {% if status == 50 %}
+          <div class="row">
+            <div class="col-sm-12">
+
+              <div class="row">
+                <div class="col-sm-12">
+                  <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"><i class="fa fa-inbox" aria-hidden="true"></i> Archive
+                  </a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 pt20" style="margin-top: 20px; ">
+                  <div class="collapse clearfix" id="collapseArchive">
+                    <div class="well clearfix">
+                      <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
+                      </a>
+                      {{ case.form.archive }}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        {% endif %}
+
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+</div><!-- .panel-group -->

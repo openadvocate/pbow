@@ -1,0 +1,8 @@
+pbow_case:
+  version: VERSION
+  js:
+    pbow_case.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once

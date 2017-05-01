@@ -1,0 +1,30 @@
+pbow_join.join:
+  path: '/activate'
+  defaults:
+    _form: 'Drupal\pbow_join\Form\JoinForm'
+    _title: 'Activate'
+  requirements:
+    _custom_access: 'Drupal\pbow_join\Form\JoinForm::access'
+
+pbow_join.welcome:
+  path: '/activate/welcome'
+  defaults:
+    _form: 'Drupal\pbow_join\Form\WelcomeForm'
+    _title: 'Welcome'
+  requirements:
+    _permission: 'access content'
+
+pbow_join.subscribed_tags_redirect:
+  path: '/user/tags'
+  defaults:
+    _controller: '\Drupal\pbow_join\Controller\RedirectController::goRedirect'
+  requirements:
+    _permission: 'access content'
+
+pbow_join.subscribed_tags:
+  path: '/user/{user}/tags'
+  defaults:
+    _form: 'Drupal\pbow_join\Form\SubscribedTagsForm'
+    _title: 'Subscribed Tags'
+  requirements:
+    _custom_access: 'Drupal\pbow_join\Form\SubscribedTagsForm::access'

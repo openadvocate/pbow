@@ -1,0 +1,7 @@
+pbow_notify:
+  version: VERSION
+  js:
+    pbow_notify.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

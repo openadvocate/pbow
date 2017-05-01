@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_homepage
+  theme:
+    - pbow
+id: pbowhomepagestats
+theme: pbow
+region: band4
+weight: -11
+provider: null
+plugin: pbow_homepagestats
+settings:
+  id: pbow_homepagestats
+  label: 'PBOW Home Page Stats'
+  provider: pbow_homepage
+  label_display: visible
+  pbow_homepagestats_stat1: '794'
+  pbow_homepagestats_stat1_text: 'Attorneys in ABC'
+  pbow_homepagestats_stat2: '93'
+  pbow_homepagestats_stat2_text: 'Cases available'
+  pbow_homepagestats_stat3: '945'
+  pbow_homepagestats_stat3_text: 'ABC helped in 2016'
+  pbow_homepagestats_stat0: 91%
+  pbow_homepagestats_stat0_text: 'of civil cases in the ABC Supreme Court have self-represented defendants. '
+visibility: {  }

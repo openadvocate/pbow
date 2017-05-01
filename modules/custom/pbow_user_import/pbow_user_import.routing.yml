@@ -1,0 +1,7 @@
+pbow_user_import.import:
+  path: '/admin/people/import'
+  defaults:
+    _form: 'Drupal\pbow_user_import\Form\UserImportForm'
+    _title: 'User Import'
+  requirements:
+    _permission: 'administer users'

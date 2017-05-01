@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: report
+label: Report
+description: ''
+use_admin_theme: false
+path: /report
+access_logic: and
+access_conditions:
+  -
+    id: user_role
+    roles:
+      staff: staff
+    negate: false
+    context_mapping:
+      user: current_user
+parameters: {  }

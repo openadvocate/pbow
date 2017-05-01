@@ -1,0 +1,450 @@
+// ------------------------------------------------------------
+
+// views_style
+// views_exposed_form
+
+// ------------------------------------------------------------
+
+@basic_page_base_font_size: 18px;
+
+
+// ------------------------------------------------------------
+.mx_page_base_font{
+  font-size: @basic_page_base_font_size;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: -0.003em;
+  line-height: 1.58;
+}
+
+// ------------------------------------------------------------
+
+body{
+  background: #fafaf8;
+  margin-top: 0;
+  &.page-node-type-page {
+    // background: #fff;
+  }
+}
+
+canvas {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.close{
+  color: #000;
+  &:focus,
+  &:hover{
+    color: #000;
+  }
+}
+
+.page-header {
+  margin-top: 16px;
+}
+
+.label.label-default.label-pbow {
+  border-radius: 2px;
+  background: lighten(#e7e7e7, 5%);
+  border: 1px solid darken(#e7e7e7, 5%);
+  padding-top: 0.1em;
+  padding-bottom: 0.1em;
+}
+
+.filter-wrapper{
+  display: none;
+}
+
+// ------------------------------------------------------------ Header
+#block-pbow-account-menu{
+  .navbar-right{
+    li:first-child{
+      display: none;
+    }
+  }
+}
+.user-logged-in{
+  #block-pbow-account-menu{
+    .navbar-right{
+      li:first-child{
+        display: block;
+      }
+    }
+  }
+}
+
+.notification-dropdown{
+  background: #fff;
+  padding: 10px;
+}
+
+// ------------------------------------------------------------
+
+.alert{
+  font-size: 24px;
+}
+
+// ------------------------------------------------------------
+.card {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 15px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.075);
+  margin-bottom: 15px;
+  
+  position: relative;
+  z-index: 2;
+ 
+  .card-title{
+    border-bottom: 1px solid #ddd !important;
+    padding-bottom: 10px !important;
+    margin-bottom: 15px !important;
+  }
+
+  &.card-secondary {
+    background: #fafafa none repeat scroll 0 0;
+    box-shadow: none;
+    margin: -16px 6px 0;
+    z-index: 1;
+  }
+}
+
+.mx_card_title{
+  border-bottom: 1px solid #ddd !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 15px !important;
+}
+
+.fieldset-card-inside{
+  margin-top: 15px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.status_indicator {
+  .label-default {
+    background-color: #ddd;
+    font-size: 12px
+  }
+  .active{
+    font-size: 17px;
+  }
+}
+
+.breadcrumb{
+  display: none;
+  background: #fff;
+}
+
+a .a-casenumber{
+  color: #888;
+  font-size: 16px;
+}
+
+.meta_info{
+  color: #999;
+}
+
+.large-icons{
+  font-size: 40px;
+}
+
+// ---------------------------------------------- Navigation
+
+
+.user-logged-in{
+  .pbow-admin-navbar{
+    display: block;
+    a{
+      color: #fff;
+    }
+  }
+}
+
+.nav-tabs > li > a {
+  padding: 15px 25px;
+}
+
+.pbow-admin-navbar{
+  margin-top: -21px;
+  #pbow-admin-menu{
+    .menu{
+      .navbar-nav;
+    }
+  }
+}
+
+.region-navigation-admin{
+  h2{
+    display: none;
+  }
+}
+
+// ---------------------------------------------- Cards
+
+.compare-card-container{
+  position: relative;
+}
+
+.compare-card{
+  position: absolute;
+  right: -15px;
+  top: 15px;
+  &.out{
+    
+  }
+}
+
+.panel-title{
+  label{
+    margin-bottom: 0;
+  }
+}
+
+.case-body-label{
+  min-width: 50px;
+  display: inline-block;
+}
+.case-body-info{
+  display: inline-block;
+}
+
+// ----------------------------------------------
+
+.pf-option{
+  display: none;
+  .fa{
+    &:hover{
+      cursor: pointer;
+    }
+  }
+}
+
+.pf-111{
+  .pf-111{
+    display: inline-block;
+  }
+}
+.pf-101{
+  .pf-101{
+    display: inline-block;
+  }
+}
+.pf-100{
+  .pf-100{
+    display: inline-block;
+  }
+}
+
+a.similar-parties-warning{
+  i{
+    color: #d9534f;
+  }
+}
+
+.nav-tabs{
+  position: relative;
+  z-index: 99;
+}
+
+.overlap_container{
+  position: relative;
+}
+.overlap_card{
+  transform-style: preserve-3d;
+    transition: transform-origin 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985) 0s,
+                transform 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985) 0s,
+                visibility 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985) 0s,
+                opacity 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985) 0s;
+    width: 100%;
+    z-index: 10;
+    backface-visibility: hidden;
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+    opacity: 1;
+    min-height: 100%;
+    transform: translate(0%, 0px);
+
+  &.move_out{
+    transform: translate(150%, 0px);
+    opacity: 0;
+  }
+  &.is_out{
+    transform: translate(150%, 0px);
+    opacity: 0;
+    display: none;
+  } 
+
+}
+
+// ----------------------------------------------
+
+.mx_block_title{
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.comment-title{
+  .mx_block_title;
+}
+
+
+// ----------------------------------- views_style
+
+.path-dashboard{
+  .block-title{
+    margin: 0;
+    .mx_block_title;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
+  .block-pbow-case{
+    .card;
+  }
+}
+
+.block.block-pbow-report{
+  .block-title{
+    margin: 0;
+    .mx_block_title;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+  }
+  .card;
+  h3{
+    .h4;
+  }
+}
+
+
+// ----------------------------------- views_exposed_form
+
+.views-exposed-form.bef-exposed-form{
+  .form-item{
+    display: block;
+    float: none;
+    margin-bottom: 20px;
+
+    label{
+      display: block;      
+    }
+    .form-control{
+      width: 100%;
+    }
+    .form-checkboxes{
+      .form-item{
+        margin-bottom: 5px;
+        input{
+          vertical-align: sub;
+        }
+      }
+    }
+  }
+}
+
+#ui-datepicker-div{
+  z-index: 2 !important;
+}
+
+
+
+
+
+
+
+
+
+
+.mb0{
+  margin-bottom: 0;
+}
+
+.mt0{
+  margin-top: 0;
+}
+
+.mt5{
+  margin-top: 5px;
+}
+.mt10{
+  margin-top: 10px;
+}
+.mt15{
+  margin-top: 15px;
+}
+.mt20{
+  margin-top: 20px;
+}
+.mt25{
+  margin-top: 25px;
+}
+.mt30{
+  margin-top: 30px;
+}
+.mt35{
+  margin-top: 35px;
+}
+.mt50{
+  margin-top: 50px;
+}
+
+
+.mb5{
+  margin-bottom: 5px;
+}
+.mb10{
+  margin-bottom: 10px;
+}
+.mb15{
+  margin-bottom: 15px;
+}
+.mb20{
+  margin-bottom: 20px;
+}
+.mb30{
+  margin-bottom: 30px;
+}
+.mb40{
+  margin-bottom: 40px;
+}
+
+
+.mr5{
+  margin-right: 5px;
+}
+.mr10{
+  margin-right: 10px;
+}
+
+
+.pl5{
+  padding-left: 5px;
+}
+
+.pl10{
+  padding-left: 10px;
+}
+
+.pb10{
+  padding-top: 10px;
+}
+
+.pt40{
+  padding-top: 40px;
+}
+.pt50{
+  padding-top: 50px;
+}
+
+
+
+
+// ----------------------------------------------
+
+

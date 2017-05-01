@@ -1,0 +1,9 @@
+name: PBOW Case
+type: module
+description: 'Features on Case contents.'
+package: PBOW
+# version: VERSION
+core: 8.x
+# configure: entity.node_type.collection
+# dependencies:
+#  - text

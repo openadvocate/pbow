@@ -1,0 +1,15 @@
+langcode: en
+status: true
+dependencies: {  }
+name: staff
+label: Staff
+triggers:
+  login: login
+destination_path: 'internal:/case-management'
+pages_type: 0
+pages: '/user/reset/*'
+roles:
+  administrator: administrator
+  staff: staff
+weight: -10
+enabled: true

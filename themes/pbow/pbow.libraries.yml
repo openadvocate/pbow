@@ -1,0 +1,33 @@
+global-styling:
+  css:
+    theme:
+      css/linear-icons.css: {}
+      css/font-awesome.min.css: {}
+      css/style.css: {}
+      vendor/jquery-ui/jquery-ui.min.css: {}
+
+bootstrap-scripts:
+  js:
+    bootstrap/js/affix.js: {}
+    bootstrap/js/alert.js: {}
+    bootstrap/js/button.js: {}
+    bootstrap/js/carousel.js: {}
+    bootstrap/js/collapse.js: {}
+    bootstrap/js/dropdown.js: {}
+    bootstrap/js/modal.js: {}
+    bootstrap/js/tooltip.js: {}
+    bootstrap/js/popover.js: {}
+    bootstrap/js/scrollspy.js: {}
+    bootstrap/js/tab.js: {}
+    bootstrap/js/transition.js: {}
+    vendor/jquery-ui/jquery-ui.min.js: {}
+    js/script.js: {}
+
+jquery-selectall:
+  js:
+    vendor/jquery-selectall/jquery-selectall.min.js: {}
+    js/jquery-selectall-instance.js: {}
+
+search-case:
+  js:
+    js/search-case.js: {}

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_homepage
+  theme:
+    - pbow
+id: pbowhowitworks
+theme: pbow
+region: band3
+weight: -11
+provider: null
+plugin: pbow_homepagehowitworks
+settings:
+  id: pbow_homepagehowitworks
+  label: 'PBOW How It Works'
+  provider: pbow_homepage
+  label_display: visible
+  pbow_homepagehowitworks_title_string: 'A default value. This block was created at <em class="placeholder">2016-09-22T16:11:03-07:00</em>'
+visibility: {  }

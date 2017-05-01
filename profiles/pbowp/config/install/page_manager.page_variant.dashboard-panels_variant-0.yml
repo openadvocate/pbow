@@ -1,0 +1,73 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.dashboard
+  module:
+    - panels
+    - pbow_case
+id: dashboard-panels_variant-0
+label: Dashboard
+variant: panels_variant
+variant_settings:
+  blocks:
+    e8699207-3c43-4223-a063-2276e4b1d258:
+      id: pbow_dashboard_requested
+      label: 'Cases you requested'
+      provider: pbow_case
+      label_display: visible
+      region: right
+      weight: -1
+      uuid: e8699207-3c43-4223-a063-2276e4b1d258
+      context_mapping: {  }
+    b13af8ea-f1a6-4594-876d-f58c1623993f:
+      id: pbow_dashboard_assigned
+      label: 'Your Active Cases'
+      provider: pbow_case
+      label_display: visible
+      region: right
+      weight: 0
+      uuid: b13af8ea-f1a6-4594-876d-f58c1623993f
+      context_mapping: {  }
+    b0939a27-0db2-496d-bd44-e810e25b5a07:
+      id: pbow_dashboard_resolved
+      label: 'Recently resolved cases'
+      provider: pbow_case
+      label_display: visible
+      region: right
+      weight: 1
+      uuid: b0939a27-0db2-496d-bd44-e810e25b5a07
+      context_mapping: {  }
+    1c97e3ef-c72e-4fc0-9cef-0b69f57f8f10:
+      id: pbow_dashboard_matching
+      label: 'Cases that match tags you are subscribed to'
+      provider: pbow_case
+      label_display: visible
+      region: left
+      weight: 0
+      uuid: 1c97e3ef-c72e-4fc0-9cef-0b69f57f8f10
+      context_mapping: {  }
+    03eacd38-ffa4-4116-9dc0-fbb37aff6701:
+      id: pbow_dashboard_viewed
+      label: 'Cases you viewed'
+      provider: pbow_case
+      label_display: visible
+      region: right
+      weight: -2
+      uuid: 03eacd38-ffa4-4116-9dc0-fbb37aff6701
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 491db06c-91c0-4e9b-8200-e93f4a3627f5
+  label: null
+  weight: 0
+  layout: bootstrap_2col_6_6
+  layout_settings: {  }
+  page_title: Dashboard
+  storage_type: page_manager
+  storage_id: dashboard-panels_variant-0
+  builder: standard
+page: dashboard
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

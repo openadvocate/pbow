@@ -1,0 +1,24 @@
+# Ignore configuration files that may contain sensitive information.
+sites/*/settings*.php
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
+
+# Ignore node.js modules
+node_modules
+node_modules/*
+bower_components
+bower_components/*
+lib
+lib/*
+
+# Ignore boostrap files
+
+
+# Ignore files from local development environment.
+.project
+.DS_Store
+sites/*/secret.settings*.php
+webcode/.htaccess
+webcode/favicon.ico

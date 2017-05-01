@@ -1,0 +1,16 @@
+super_login:
+  login_text: 'Email or Username'
+  forgot_pw_text: 'Forgot Password?'
+  capslock_msg: 'Caps Lock On'
+  new_account_text: 'Create new account'
+  login_title: ''
+  password_reset_title: ''
+  back_link: 'Back to login page'
+  css: 0
+  button_theme: true
+  placeholder: 1
+  login_type: '0'
+  button_image: null
+  autofill: null
+_core:
+  default_config_hash: bwTwanbc48Nv855gsFIDT9nI-51WAT2yFgwijMWZQbQ

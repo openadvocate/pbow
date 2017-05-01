@@ -1,0 +1,7 @@
+name: PBOW Report
+type: module
+description: 'Provides Report Blocks.'
+package: PBOW
+core: 8.x
+dependencies:
+ - block

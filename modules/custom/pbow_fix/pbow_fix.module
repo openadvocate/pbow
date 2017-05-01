@@ -1,0 +1,50 @@
+<?php
+
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+
+/**
+ * @file
+ * Contains pbow_fix.module.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ * 
+ * Add custom text for /contact form.
+ */
+function pbow_fix_form_contact_message_feedback_form_alter(&$form, FormStateInterface $form_state) {
+  $form['instruction'] = [
+    '#markup' => "
+      <p>If you are an attorney registered to practice law in the State of Idaho, you can fill this form to contact us.</p>
+      <p>Note: If you need legal information, assistance or a pro bono attorney, do not fill out this form.</p>",
+    '#weight' => -1,
+  ];
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * @see \Drupal\user\ProfileForm::form()
+ */
+function pbow_fix_form_user_form_alter(&$form, FormStateInterface $form_state) {
+  // Contact module does not offer way to hide it, so hide it.
+  $form['contact']['#access'] = FALSE;
+
+  $form['field_bar_id']['widget'][0]['value']['#attributes']['readonly'] = TRUE;
+  $form['field_bar_email']['widget'][0]['value']['#attributes']['readonly'] = TRUE;
+
+  $form['actions']['submit']['#submit'][] = 'pbow_fix_form_user_form_submit';
+}
+
+/**
+ * Custom submit handler for user_form to redirect after submission.
+ *
+ * @see pbow_fix_form_user_form_alter().
+ */
+function pbow_fix_form_user_form_submit($form, FormStateInterface $form_state) {
+  $form_state->setRedirect('entity.user.canonical', ['user' => $form_state->getValue('uid')]);
+}

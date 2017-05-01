@@ -1,0 +1,8 @@
+pbow_user_import:
+  version: VERSION
+  js:
+    pbow_user_import.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/jquery.once

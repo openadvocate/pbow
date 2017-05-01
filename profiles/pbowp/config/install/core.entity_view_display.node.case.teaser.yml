@@ -1,0 +1,47 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.case.body
+    - node.type.case
+  module:
+    - text
+    - user
+id: node.case.teaser
+targetEntityType: node
+bundle: case
+mode: teaser
+content:
+  body:
+    label: hidden
+    type: text_summary_or_trimmed
+    weight: 101
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+  flag_case_request:
+    weight: 10
+  links:
+    weight: 100
+hidden:
+  field_case_adverse_alias: true
+  field_case_adverse_name: true
+  field_case_assigned: true
+  field_case_check_all: true
+  field_case_check_id: true
+  field_case_check_party: true
+  field_case_client_alias: true
+  field_case_client_name: true
+  field_case_comments: true
+  field_case_id: true
+  field_case_partner: true
+  field_case_problem_code: true
+  field_case_source: true
+  field_case_status: true
+  field_case_tags: true
+  field_case_time_assigned: true
+  field_case_time_available: true
+  field_case_time_completed: true
+  field_case_time_incoming: true
+  field_case_time_requested: true

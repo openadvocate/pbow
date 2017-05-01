@@ -1,0 +1,212 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block.
+ *
+ * Available variables:
+ * - $block->subject: Block title.
+ * - $content: Block content.
+ * - $block->module: Module that generated the block.
+ * - $block->delta: An ID for the block, unique within each module.
+ * - $block->region: The block region embedding the current block.
+ * - $classes: String of classes that can be used to style contextually through
+ *   CSS. It can be manipulated through the variable $classes_array from
+ *   preprocess functions. The default values can be one or more of the
+ *   following:
+ *   - block: The current template type, i.e., "theming hook".
+ *   - block-[module]: The module generating the block. For example, the user
+ *     module is responsible for handling the default user navigation block. In
+ *     that case the class would be 'block-user'.
+ * - $title_prefix (array): An array containing additional output populated by
+ *   modules, intended to be displayed in front of the main title tag that
+ *   appears in the template.
+ * - $title_suffix (array): An array containing additional output populated by
+ *   modules, intended to be displayed after the main title tag that appears in
+ *   the template.
+ *
+ * Helper variables:
+ * - $classes_array: Array of html class attribute values. It is flattened
+ *   into a string within the variable $classes.
+ * - $block_zebra: Outputs 'odd' and 'even' dependent on each block region.
+ * - $zebra: Same output as $block_zebra but independent of any block region.
+ * - $block_id: Counter dependent on each block region.
+ * - $id: Same output as $block_id but independent of any block region.
+ * - $is_front: Flags true when presented in the front page.
+ * - $logged_in: Flags true when the current user is a logged-in member.
+ * - $is_admin: Flags true when the current user is an administrator.
+ * - $block_html_id: A valid HTML ID and guaranteed unique.
+ *
+ * @ingroup templates
+ *
+ * @see bootstrap_preprocess_block()
+ * @see template_preprocess()
+ * @see template_preprocess_block()
+ * @see bootstrap_process_block()
+ * @see template_process()
+ */
+#}
+{#%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+    'clearfix',
+  ]
+%#}
+{#
+  * Case statuses *
+    INCOMING  = 10;
+    AVAILABLE = 20;
+    REQUESTED = 30;
+    ASSIGNED  = 40;
+    RESOLVED  = 50;
+    ARCHIVED  = 60;
+#}
+<div class="card overlap_container">
+  <div style="margin-top: 5px;" class="mb30">
+    <h4 class="text-left status_indicator">
+      {% set status = case.field_case_status.value %}
+      <span class="label label-{{ status in [20,30] and not case.request ? 'warning' : 'default' }}">Available</span>
+      <span class="label label-{{ case.request and not case.assign and not case.reject ? 'info' : 'default' }}">Requested{{ case.request ? ' by you' : '' }}</span>
+      <span class="label label-{{ status != 50 and (case.assign or case.reject) ? 'success' : 'default' }}">Assigned{{ status != 50 and case.assign ? ' to you' : '' }}</span>
+      <span class="label label-{{ status == 50 ? 'primary' : 'default' }}">Resolved</span>
+    </h4>
+  </div>
+
+{# Show if status is >= Imported #}
+{% if status >= 10 and case.field_case_deadline.value %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" href="#" aria-expanded="true" aria-controls="collapseOne">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-6 control-label">Deadline
+              {{ case.field_case_deadline.remaining ? case.field_case_deadline.remaining|raw : '' }}
+            </label>
+            <div class="col-lg-6 text-right">
+              {{ case.field_case_deadline.value
+               ? case.field_case_deadline.value|date('m/d/Y')
+               : 'Not set'}}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+  </div>
+{% endif %}
+
+{% if case.assign and status >= 50  %}
+  <div class="panel panel-default ">
+    <div class="panel-heading" role="tab" id="headingFifth">
+      <h4 class="panel-title case-indicator-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFifth" aria-expanded="{{ status == 50 ? 'true' : 'false' }}" aria-controls="collapseFifth" class="{{ status == 50 ? '' : 'collapsed' }}">
+          <div class="row">
+            <label for="inputEmail" class="col-lg-4 control-label">Resolved</label>
+            <div class="col-lg-8 text-right">
+              {{ case.field_case_time_completed.value
+               ? case.field_case_time_completed.value|date('m/d/Y')
+               : 'Not set' }}
+            </div>
+          </div>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseFifth" class="panel-collapse collapse {{ status == 50 ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingFifth" aria-expanded="{{ status == 50 ? 'true' : 'false' }}">
+      <div class="panel-body">
+        <div>
+          <label>Resolved by:</label>
+          <div class="lead">
+            {{ case.field_case_assigned.entity.name.value }}
+          </div>
+        </div>
+        <div>
+          <label>Date of Closure:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_date.value
+             ? case.field_case_resolve_date.value|date('F j, Y')
+             : 'Not set' }}
+          </div>
+        </div>
+        <div>
+          <label>Hours:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_hours_att.value + case.field_case_resolve_hours_para.value}}
+            ({{ case.field_case_resolve_hours_att.value}} att. + {{ case.field_case_resolve_hours_para.value }} para.)
+          </div>
+        </div>
+        <div>
+          <label>Closing Outcome:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_outcome.value_print }}
+          </div>
+        </div>
+        <div>
+          <label>Close Reason:</label>
+          <div class="lead">
+            {{ case.field_case_resolve_close_type.value_print }}
+          </div>
+        </div>
+        <div>
+          <label>Closing notes:</label>
+          <div class="">
+            {{ case.field_case_resolve_note.value|nl2br }}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if not case.check and not case.assign %}
+  <div class="lead">
+    You need to agree to terms and no conflict of interests before you can request this case.
+  </div>
+{% endif %}
+
+{% if case.check %}
+  <div class="lead">
+    You have agreed to no conflict of interest terms on {{ case.check.created.value|date('m/d/Y') }}.
+  </div>
+{% endif %}
+
+{% if case.request %}
+  <div class="lead">
+    You have requested this case on {{ case.request.created.value|date('m/d/Y') }}.
+  </div>
+{% endif %}
+
+{% if case.reject %}
+  <div class="lead">
+    This case has been assigned to others.
+  </div>
+{% elseif case.request and not case.assign %}
+  <div class="lead">
+    Your request is currently pending approval.
+  </div>
+{% endif %}
+
+{% if case.assign %}
+    <div class="lead">
+      This case was assigned to you on {{ case.field_case_time_assigned.value ? case.field_case_time_assigned.value|date('m/d/Y') : 'Date not set' }}.
+    </div>
+    {% if status == 50 %}
+      <div class="lead">
+        You completed this case on {{ case.field_case_time_completed.value ? case.field_case_time_completed.value|date('m/d/Y') : 'Date not set' }}.
+      </div>
+    {% else %}
+      <div class="clearfix">
+        <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseResolve" aria-expanded="false" aria-controls="collapseResolve">
+          Resolve Case
+        </a>
+      </div>
+    {% endif %}
+{% endif %}
+
+</div><!-- .card .overlap_container -->
+
+{% if status != 50 %}
+  <div class="card card-secondary collapse" id="collapseResolve" aria-expanded="false">
+    {{ case.form.resolve }}
+  </div>
+{% endif %}

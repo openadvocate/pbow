@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_case
+_core:
+  default_config_hash: YDXI0biCLfj9e9NyO62ShDesAKKVG01UD7FC5p1YpMQ
+id: case_approve_action
+label: 'Approve Case'
+type: node
+plugin: case_approve_action
+configuration: {  }

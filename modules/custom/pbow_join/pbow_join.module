@@ -1,0 +1,43 @@
+<?php
+
+/**
+ * @file
+ * Membership join process.
+ */
+
+use Drupal\Core\Render\BubbleableMetadata;
+
+ /**
+  * Implements hook_token_info().
+  */
+function pbow_join_token_info() {
+  $user['pwd-reset-url'] = [
+    'name' => t('Password reset url'),
+    'description' => t("Drupal core's 'One-time login URL' is not available here. So custom provided."),
+  ];
+
+  return [
+    'tokens' => [ 'user' => $user ],
+  ];
+}
+
+ /**
+  * Implements hook_tokens().
+  */
+function pbow_join_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
+  $replacements = [];
+
+  if ($type == 'user' and !empty($data['user'])) {
+    $user = $data['user'];
+
+    foreach ($tokens as $name => $original) {
+      switch ($name) {
+        case 'pwd-reset-url':
+          $replacements[$original] = user_pass_reset_url($user);
+          break;
+      }
+    }
+  }
+
+  return $replacements;
+}

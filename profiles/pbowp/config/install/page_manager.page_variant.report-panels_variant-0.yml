@@ -1,0 +1,109 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.report
+  module:
+    - panels
+    - pbow_report
+id: report-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    f1029654-b3f4-4bfa-8fdc-9bafa5f43eed:
+      id: pbow_report_chart_user_activity
+      label: 'User Activity'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: -2
+      uuid: f1029654-b3f4-4bfa-8fdc-9bafa5f43eed
+      context_mapping: {  }
+    8753b982-ae95-44d1-95f7-c86a0bf09845:
+      id: pbow_report_chart_activated_accounts
+      label: 'PBOW Report - Activated Accounts'
+      provider: pbow_report
+      label_display: '0'
+      region: right
+      weight: -4
+      uuid: 8753b982-ae95-44d1-95f7-c86a0bf09845
+      context_mapping: {  }
+    48c18e1e-5e62-444b-b06e-c16871445938:
+      id: pbow_report_chart_case_status
+      label: 'Case Status'
+      provider: pbow_report
+      label_display: visible
+      region: right
+      weight: -2
+      uuid: 48c18e1e-5e62-444b-b06e-c16871445938
+      context_mapping: {  }
+    317abe8d-2007-4468-abda-ad70a2c84b25:
+      id: pbow_report_chart_user_engagement
+      label: 'User Engagement'
+      provider: pbow_report
+      label_display: visible
+      region: right
+      weight: -3
+      uuid: 317abe8d-2007-4468-abda-ad70a2c84b25
+      context_mapping: {  }
+    df79fd77-e5d4-4ed0-bb7f-70b4deb13393:
+      id: pbow_report_chart_case_activity
+      label: 'Case Activity'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: -1
+      uuid: df79fd77-e5d4-4ed0-bb7f-70b4deb13393
+      context_mapping: {  }
+    5c132164-b2ea-4b8b-8547-08b93beb48e9:
+      id: pbow_report_chart_api_activity
+      label: 'API Activity'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: 0
+      uuid: 5c132164-b2ea-4b8b-8547-08b93beb48e9
+      context_mapping: {  }
+    b40f0338-fc7d-47f3-af40-68263b5cf125:
+      id: pbow_report_chart_cases_by_population
+      label: 'Cases/Users By Population'
+      provider: pbow_report
+      label_display: visible
+      region: right
+      weight: -1
+      uuid: b40f0338-fc7d-47f3-af40-68263b5cf125
+      context_mapping: {  }
+    11b1d427-9ca1-4562-a1aa-d0599ed2f29a:
+      id: pbow_report_chart_cases_by_type
+      label: 'Cases/Users By Type'
+      provider: pbow_report
+      label_display: visible
+      region: right
+      weight: 0
+      uuid: 11b1d427-9ca1-4562-a1aa-d0599ed2f29a
+      context_mapping: {  }
+    2e318562-cada-45ec-bfec-b7f792c5df28:
+      id: pbow_report_chart_cases_by_county
+      label: 'Cases/Users By County'
+      provider: pbow_report
+      label_display: visible
+      region: right
+      weight: 1
+      uuid: 2e318562-cada-45ec-bfec-b7f792c5df28
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 49f6bd48-9139-4b5f-99c7-e8e620efe974
+  label: null
+  weight: 0
+  layout: bootstrap_2col_6_6
+  layout_settings: {  }
+  page_title: Report
+  storage_type: page_manager
+  storage_id: report-panels_variant-0
+  builder: standard
+page: report
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

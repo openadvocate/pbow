@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_homepage
+  theme:
+    - pbow
+id: pbowhomepagelogin
+theme: pbow
+region: band2
+weight: -11
+provider: null
+plugin: pbow_homepageloginbutton
+settings:
+  id: pbow_homepageloginbutton
+  label: 'Already activated account?'
+  provider: pbow_homepage
+  label_display: visible
+  pbow_homepageloginbutton_title_string: ''
+visibility: {  }

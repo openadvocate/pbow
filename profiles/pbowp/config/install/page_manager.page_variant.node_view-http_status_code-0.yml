@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.node_view
+  module:
+    - ctools
+    - user
+id: node_view-http_status_code-0
+label: 'Case (anon)'
+variant: http_status_code
+variant_settings:
+  id: http_status_code
+  uuid: 5354dcdd-e47f-4fc8-9dad-8a7cbd981d1b
+  label: null
+  weight: 0
+  status_code: 403
+page: node_view
+weight: -9
+selection_criteria:
+  -
+    id: 'entity_bundle:node'
+    bundles:
+      case: case
+    negate: false
+    context_mapping:
+      node: node
+  -
+    id: user_role
+    roles:
+      anonymous: anonymous
+    negate: false
+    context_mapping:
+      user: current_user
+selection_logic: and
+static_context: {  }

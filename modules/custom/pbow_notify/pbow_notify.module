@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * @file
+ * PBOW Notify module file.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\user\Entity\User;
+
+module_load_include('inc', 'pbow_notify', 'pbow_notify.tokens');
+
+define('PET_ID_PWD_RESET', 1); // See JoinForm::PET_ID_PWD_RESET in JoinForm.php
+define('PET_ID_ASSIGN',    2);
+define('PET_ID_REJECT',    3);
+define('PET_ID_REVOKE',    4);
+define('PET_ID_MONTHLY',   5);
+
+/**
+ * Implements hook_page_attachments().
+ */
+function pbow_notify_page_attachments(array &$page) {
+  if (\Drupal::currentUser()->isAuthenticated()) {
+    $page['#attached']['library'][] = 'pbow_notify/pbow_notify';
+  }
+}
+
+function pbow_notify_set_notice($data) {
+  $petid = $data['pet'];
+  $user = $data['user'];
+  $case = $data['case'];
+
+  if (is_numeric($user)) {
+    $user = User::load($user);
+  }
+
+  switch ($petid) {
+    case PET_ID_ASSIGN:
+      $notice = "The case \"{$case->field_case_id->value}: {$case->title->value}\" has been assigned to you.";
+      $log = 'Assignment notification mailed to %name on Case nid=%nid';
+      break;
+    case PET_ID_REJECT:
+      $notice = "The case \"{$case->field_case_id->value}: {$case->title->value}\" has been assigned to other user.";
+      $log = 'Rejection notification mailed to %name on Case nid=%nid';
+      break;
+    case PET_ID_REVOKE:
+      $notice = "The case \"{$case->field_case_id->value}: {$case->title->value}\" has been unassigned from you.";
+      $log = 'Revoke notification mailed to %name on Case nid=%nid';
+      break;
+    default:
+      return;
+  }
+
+  $notices = $user->field_notices->getValue();
+  $notices[] = ['value' => "new\n{$notice}\n" . REQUEST_TIME];
+  $user->field_notices->setValue($notices);
+  $user->save();
+
+  pbow_notify_send_mail([
+    'petid' => $petid,
+    'user' => $user,
+    'nid' => $case->id(),
+    'log' => $log,
+  ]);
+}
+
+function pbow_notify_send_mail($data) {
+  if (!$pet = pet_load($data['petid'])) {
+    drupal_set_message('PET templates not set up.', 'error');
+    return;
+  }
+
+  $user = $data['user'];
+  $nid = $data['nid'];
+  $log = $data['log'];
+
+  $params = [
+    'pet_from' => \Drupal::config('system.site')->get('mail'),
+    'pet_to'   => $user->getEmail(),
+    'pet_uid'  => $user->id(),
+    'pet_nid'  => $nid,
+  ];
+
+  try {
+    if ($mail = pet_send_one_mail($pet, $params)) {
+      \Drupal::logger('pbow_notify')->info($log, array('%name' => $user->getUsername(), '%nid' => $nid));
+    }
+    else {
+      \Drupal::logger('pbow_notify')->error("Error trying to send email ($log)", array('%name' => $user->getUsername(), '%nid' => $nid));
+    }
+  }
+  catch (\Exception $e) {
+    \Drupal::logger('pbow_notify')->error("Error: (" . $e->getMessage() . ") trying to send email ($log)", array('%name' => $user->getUsername(), '%nid' => $nid));
+  }
+}
+/**
+ * Implements hook_cron().
+ *
+ * Remove older user notices (> 180 days). Notice field has 3 parts.
+ * "status\ntitle\ntimestamp", i.e. "new\nExample notice blah blah\n1480964250"
+ */
+function pbow_notify_cron() {
+  // Run once per day after midnight
+  if (date('G') === '0') {
+    if (REQUEST_TIME - \Drupal::state()->get('pbow_notify.cron', 0) > 3600) {
+      // Delete SQL: Seen user notices older than 180 days.
+      $sql = "DELETE FROM user__field_notices WHERE UNIX_TIMESTAMP() - SUBSTR(field_notices_value, -10) > 86400*180;";
+
+      Database::getConnection('default')->query($sql);
+
+      \Drupal::state()->set('pbow_notify.cron', REQUEST_TIME);
+    }
+  }
+
+  // Run on 1st of each month.
+  // Push users to the queue and let QueueWorker plugin send mails.
+  if (date('j') === '1') {
+    if (REQUEST_TIME - \Drupal::state()->get('pbow_notify.cron.monthly', 0) > 86400) {
+      $uids = \Drupal::entityQuery('user')
+        ->condition('status', 1)
+        ->condition('uid', 1, '>')
+        ->condition('access', REQUEST_TIME - 86400*90, '>') // visited site within 3 months
+        ->condition('field_notification', 'monthly')
+        ->execute();
+
+      if ($uids) {
+        $queue = \Drupal::queue('pbow_monthly_summary_mail');
+        foreach ($uids as $uid) {
+          $queue->createItem($uid);
+        }
+      }
+
+      \Drupal::state()->set('pbow_notify.cron.monthly', REQUEST_TIME);
+    }
+  }
+}

@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_homepage
+  theme:
+    - pbow
+id: pbowquoteblock
+theme: pbow
+region: band5
+weight: -11
+provider: null
+plugin: pbow_homepagequote
+settings:
+  id: pbow_homepagequote
+  label: 'PBOW Quote Block'
+  provider: pbow_homepage
+  label_display: visible
+  pbow_homepagequote_quote_string: 'Every lawyer...has a responsibility to provide legal services to those unable to pay, and personal involvement in the problems of the disadvantaged can be one of the most rewarding experiences in the life of a lawyer.'
+  pbow_homepagequote_by_line_string: 'Model Rule 6.1 of Professional Conduct'
+  pbow_homepagequote_by_line_string2: 'American Bar Association'
+visibility: {  }

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_homepage
+  theme:
+    - pbow
+id: pbowhomepagebanner
+theme: pbow
+region: band1
+weight: -11
+provider: null
+plugin: pbow_home_page_banner
+settings:
+  id: pbow_home_page_banner
+  label: 'Make the time. Make a difference.'
+  provider: pbow_homepage
+  label_display: visible
+  pbow_homepagebanner_title_string: 'Find and volunteer for pro bono opportunities.'
+visibility: {  }

@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_case
+    - system
+  theme:
+    - pbow
+id: pbowcasemanagementcounts
+theme: pbow
+region: content
+weight: -5
+provider: null
+plugin: pbow_case_management_counts
+settings:
+  id: pbow_case_management_counts
+  label: 'PBOW Case Management Counts'
+  provider: pbow_case
+  label_display: visible
+visibility:
+  request_path:
+    id: request_path
+    pages: "/case-management\r\n/case-management/*\r\n"
+    negate: false
+    context_mapping: {  }

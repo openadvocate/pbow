@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: case_approve_action
+label: 'Approve Case'
+type: node
+plugin: case_approve_action
+configuration: {  }

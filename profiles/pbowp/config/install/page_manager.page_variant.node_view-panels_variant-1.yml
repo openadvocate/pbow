@@ -1,0 +1,48 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.node_view
+  module:
+    - ctools
+    - panels
+id: node_view-panels_variant-1
+label: Fallback
+variant: panels_variant
+variant_settings:
+  blocks:
+    0e9380a8-48d4-4b9d-8787-dc7d6098d309:
+      id: page_title_block
+      label: 'Page title'
+      provider: core
+      label_display: '0'
+      region: center
+      weight: -9
+      uuid: 0e9380a8-48d4-4b9d-8787-dc7d6098d309
+      context_mapping: {  }
+    64056114-aa8e-404b-8eb2-a4787bc03bbf:
+      id: 'entity_view:node'
+      label: 'Entity view (Content)'
+      provider: ctools
+      label_display: '0'
+      view_mode: default
+      region: center
+      weight: -8
+      uuid: 64056114-aa8e-404b-8eb2-a4787bc03bbf
+      context_mapping:
+        entity: node
+  id: panels_variant
+  uuid: 8d0d5e43-e022-4cb0-8557-fbef34936b05
+  label: null
+  weight: 0
+  layout: bootstrap_2col_8_4
+  layout_settings: {  }
+  page_title: ''
+  storage_type: page_manager
+  storage_id: node_view-panels_variant-1
+  builder: standard
+page: node_view
+weight: -8
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

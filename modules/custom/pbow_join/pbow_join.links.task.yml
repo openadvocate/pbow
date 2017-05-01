@@ -1,0 +1,5 @@
+pbow_join.subscribed_tags:
+  title: Tags
+  route_name: pbow_join.subscribed_tags
+  base_route: entity.user.canonical
+  weight: 5

@@ -1,0 +1,12 @@
+pbow_notify.api_controller_getNotices:
+  path: 'api/pbow-notify/get-notices'
+  defaults:
+    _controller: '\Drupal\pbow_notify\Controller\ApiController::getNotices'
+  requirements:
+    _role: 'authenticated'
+pbow_notify.api_controller_hasNewNotices:
+  path: 'api/pbow-notify/has-new-notices'
+  defaults:
+    _controller: '\Drupal\pbow_notify\Controller\ApiController::hasNewNotices'
+  requirements:
+    _role: 'authenticated'

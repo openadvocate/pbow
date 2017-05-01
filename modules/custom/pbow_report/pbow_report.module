@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function pbow_report_theme($existing, $type, $theme, $path) {
+  return [
+    'pbow_report_chart_user_activity' => [
+      'template' => 'block--pbow-report-user-activity',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_case_activity' => [
+      'template' => 'block--pbow-report-case-activity',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_api_activity' => [
+      'template' => 'block--pbow-report-api-activity',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_activated_accounts' => [
+      'template' => 'block--pbow-report-activated-accounts',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_case_status' => [
+      'template' => 'block--pbow-report-case-status',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_cases_by_population' => [
+      'template' => 'block--pbow-report-cases-by-population',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_cases_by_type' => [
+      'template' => 'block--pbow-report-cases-by-type',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_cases_by_county' => [
+      'template' => 'block--pbow-report-cases-by-county',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_chart_user_engagement' => [
+      'template' => 'block--pbow-report-user-engagement',
+      'variables' => ['data' => NULL],
+    ],
+  ];
+}
+
+function pbow_report_page_attachments_alter(&$vars){
+  // get current path
+  $current_path = Drupal::request()->getRequestUri();
+
+  // check for a path
+  if (!empty($current_path) && (substr( $current_path, 0, 7 ) === "/report")) {
+    // attach our library
+    $vars['#attached']['library'][] = 'pbow_report/chart';
+  }
+
+}

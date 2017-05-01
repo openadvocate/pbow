@@ -1,0 +1,107 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.node_view
+  module:
+    - ctools
+    - panels
+    - pbow_case
+    - user
+id: node_view-panels_variant-0
+label: Case
+variant: panels_variant
+variant_settings:
+  blocks:
+    e3e9fa21-eb19-4662-ab5f-a9b94e07d23b:
+      id: pbow_case_body
+      label: 'PBOW Case Body'
+      provider: pbow_case
+      label_display: '0'
+      region: left
+      weight: -3
+      uuid: e3e9fa21-eb19-4662-ab5f-a9b94e07d23b
+      context_mapping: {  }
+    4b3805e4-f7fe-4db3-954b-f4afb2ceb549:
+      id: pbow_case_parties
+      label: 'PBOW Case Parties'
+      provider: pbow_case
+      label_display: '0'
+      region: left
+      weight: -2
+      uuid: 4b3805e4-f7fe-4db3-954b-f4afb2ceb549
+      context_mapping: {  }
+    b0c8f497-a1a6-4830-9b66-da79ad67ddb4:
+      id: pbow_case_status
+      label: 'PBOW Case Status'
+      provider: pbow_case
+      label_display: '0'
+      region: right
+      weight: 0
+      uuid: b0c8f497-a1a6-4830-9b66-da79ad67ddb4
+      context_mapping: {  }
+    465ddcb3-5947-415c-ba1a-b54d80a05bb8:
+      id: pbow_case_conflict_check
+      label: 'PBOW Case Conflict Check'
+      provider: pbow_case
+      label_display: '0'
+      region: left
+      weight: 0
+      uuid: 465ddcb3-5947-415c-ba1a-b54d80a05bb8
+      context_mapping: {  }
+    fe35b96c-2465-4cf9-bda8-565e4aab30a3:
+      id: pbow_case_title
+      label: 'PBOW Case Title'
+      provider: pbow_case
+      label_display: '0'
+      region: top
+      weight: 0
+      uuid: fe35b96c-2465-4cf9-bda8-565e4aab30a3
+      context_mapping: {  }
+    bb75fc1f-1883-4091-aae1-d799fcfa8a49:
+      id: pbow_view_parties
+      label: 'PBOW Case View Parties'
+      provider: pbow_case
+      label_display: '0'
+      region: left
+      weight: -1
+      uuid: bb75fc1f-1883-4091-aae1-d799fcfa8a49
+      context_mapping: {  }
+    64c6d456-4cf9-44bd-87f7-24b7c19e9b23:
+      id: pbow_case_request
+      label: 'PBOW Case Request'
+      provider: pbow_case
+      label_display: '0'
+      region: left
+      weight: 1
+      uuid: 64c6d456-4cf9-44bd-87f7-24b7c19e9b23
+      context_mapping: {  }
+  id: panels_variant
+  uuid: b36985f6-c4f4-44e9-a564-caedd7c6f460
+  label: null
+  weight: 0
+  layout: bootstrap_2col_6_6
+  layout_settings: {  }
+  page_title: ''
+  storage_type: page_manager
+  storage_id: node_view-panels_variant-0
+  builder: standard
+page: node_view
+weight: -10
+selection_criteria:
+  -
+    id: 'entity_bundle:node'
+    bundles:
+      case: case
+    negate: false
+    context_mapping:
+      node: node
+  -
+    id: user_role
+    roles:
+      authenticated: authenticated
+    negate: false
+    context_mapping:
+      user: current_user
+selection_logic: and
+static_context: {  }

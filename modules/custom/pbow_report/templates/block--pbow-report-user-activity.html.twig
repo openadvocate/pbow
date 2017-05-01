@@ -1,0 +1,89 @@
+  
+  <canvas id="canvas-user-activity" style="display: none;" width="578" height="200"></canvas>
+  <h3 class="text-center">Users' Last Activity Ageline</h3>
+  <canvas id="chart-user-activity" width="400" height="121" style="display: block; width: 400px; height: 121px;"></canvas>
+  <hr />
+  <h3 class="text-center">Weekly Web Traffic</h3>
+  <canvas id="chart-weekly-web-trafic" width="400" height="121" style="display: block; width: 400px; height: 121px;"></canvas>
+
+  <script>
+    var canvas = document.getElementById('canvas-user-activity');
+    var context = canvas.getContext('2d');
+    context.rect(0, 0, canvas.width, canvas.height);
+    // add linear gradient
+    var grd = context.createLinearGradient(0, 0, canvas.width, 0);
+    // light blue
+    grd.addColorStop(0, '#ff6384'); 
+    grd.addColorStop(0.4, '#36a2eb'); 
+    // dark blue
+    grd.addColorStop(1, '#5fba7d');
+    context.fillStyle = grd;
+    context.fill();
+
+    new Chart("chart-user-activity", {
+      type: 'line',
+      data: {
+        labels: [{{ data.labels|raw }}],
+        datasets: [
+          {
+            label: "",
+            fill: true,
+            lineTension: 0.2,
+            backgroundColor: grd,
+            borderColor: grd,
+            pointHoverRadius: 5,
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            data: [{{ data.activity }}],
+            spanGaps: false,
+          },
+        ]
+      },
+      options: {
+        legend:{
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            position: "left",
+            "id": "y-axis-0"
+          }]
+        }
+      }
+    });
+
+    new Chart("chart-weekly-web-trafic", {
+      type: 'line',
+      data: {
+        labels: [{{ data.labels|raw }}],
+        datasets: [
+          {
+            label: "",
+            fill: true,
+            lineTension: 0.3,
+            backgroundColor: '#36a2eb',
+            borderColor: '#36a2eb',
+            pointHoverRadius: 5,
+            pointHoverBorderWidth: 2,
+            pointRadius: 1,
+            pointHitRadius: 10,
+            yAxisID: "y-axis-1",
+            data: [{{ data.traffic }}],
+            spanGaps: false,
+          },
+        ]
+      },
+      options: {
+        legend:{
+          display: false
+        },
+        scales: {
+          yAxes: [{
+            position: "left",
+            "id": "y-axis-1"
+          }]
+        }
+      }
+    });
+  </script>

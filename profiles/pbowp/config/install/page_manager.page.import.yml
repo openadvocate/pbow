@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: import
+label: Import
+description: ''
+use_admin_theme: false
+path: /import
+access_logic: and
+access_conditions:
+  -
+    id: user_role
+    roles:
+      administrator: administrator
+      staff: staff
+    negate: false
+    context_mapping:
+      user: current_user
+parameters: {  }

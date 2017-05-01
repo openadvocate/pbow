@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.navigation-admin
+  module:
+    - system
+  theme:
+    - pbow
+id: navigation_admin
+theme: pbow
+region: navigation_admin
+weight: -12
+provider: null
+plugin: 'system_menu_block:navigation-admin'
+settings:
+  id: 'system_menu_block:navigation-admin'
+  label: navigation_admin
+  provider: system
+  label_display: visible
+  level: 1
+  depth: 0
+visibility: {  }

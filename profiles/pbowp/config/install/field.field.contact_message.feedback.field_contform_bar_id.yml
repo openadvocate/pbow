@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - contact.form.feedback
+    - field.storage.contact_message.field_contform_bar_id
+id: contact_message.feedback.field_contform_bar_id
+field_name: field_contform_bar_id
+entity_type: contact_message
+bundle: feedback
+label: 'State Bar ID'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,29 @@
+bootstrap_2col_8_4:
+  label: Bootstrap 2 Column 8/4
+  category: Bootstrap 3
+  template: layouts/bootstrap-2col-8-4
+  regions:
+    top:
+      label: Top
+    left:
+      label: Left
+    right:
+      label: Right
+    center:
+      label: Center
+    bottom:
+      label: Bottom
+
+bootstrap_2col_6_6:
+  label: Bootstrap 2 Column 6/6
+  category: Bootstrap 3
+  template: layouts/bootstrap-2col-6-6
+  regions:
+    top:
+      label: Top
+    left:
+      label: Left
+    right:
+      label: Right
+    bottom:
+      label: Bottom

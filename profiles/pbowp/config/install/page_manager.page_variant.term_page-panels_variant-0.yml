@@ -1,0 +1,74 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.term_page
+    - views.view.term_tagged_content
+    - views.view.term_tagged_users
+  module:
+    - panels
+    - views
+id: term_page-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    648e4f43-90b7-4a14-850f-6d474dbdeb6c:
+      id: 'views_block:term_tagged_users-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: right
+      weight: 0
+      uuid: 648e4f43-90b7-4a14-850f-6d474dbdeb6c
+      context_mapping: {  }
+    84fb1de4-41a6-4f91-b85f-2fd71a14c1c1:
+      id: 'views_block:term_tagged_users-block_2'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: right
+      weight: 0
+      uuid: 84fb1de4-41a6-4f91-b85f-2fd71a14c1c1
+      context_mapping: {  }
+    f4ccf2e3-61ec-49bc-974e-e2b266a68a1b:
+      id: 'views_block:term_tagged_users-block_3'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: right
+      weight: 0
+      uuid: f4ccf2e3-61ec-49bc-974e-e2b266a68a1b
+      context_mapping: {  }
+    be20e902-b57d-4cb8-9ec0-895207e7746c:
+      id: 'views_block:term_tagged_content-block_1'
+      label: ''
+      provider: views
+      label_display: visible
+      views_label: ''
+      items_per_page: none
+      region: left
+      weight: 0
+      uuid: be20e902-b57d-4cb8-9ec0-895207e7746c
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 2ec6a87e-a708-45c1-88b2-4faaf93cfb59
+  label: null
+  weight: 0
+  layout: bootstrap_2col_6_6
+  layout_settings: {  }
+  page_title: '[term:name]'
+  storage_type: page_manager
+  storage_id: term_page-panels_variant-0
+  builder: standard
+page: term_page
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

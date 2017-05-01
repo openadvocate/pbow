@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: regular_user
+label: 'Regular user'
+triggers:
+  login: login
+destination_path: 'internal:/dashboard'
+pages_type: 0
+pages: '/user/reset/*'
+roles:
+  authenticated: authenticated
+weight: -9
+enabled: true

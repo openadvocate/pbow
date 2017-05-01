@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'LSC Problem Code'
+vid: problem_code
+description: ''
+hierarchy: 0
+weight: 0

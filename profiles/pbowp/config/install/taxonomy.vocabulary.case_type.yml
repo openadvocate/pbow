@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Case Type'
+vid: case_type
+description: 'Case types and opportunities of interest'
+hierarchy: 0
+weight: 0

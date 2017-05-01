@@ -1,0 +1,5 @@
+chart:
+  version: VERSION
+  header: true
+  js:
+    vendor/Chart.min.js: {}

@@ -1,0 +1,85 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display a block.
+ *
+ * Available variables:
+ * - $block->subject: Block title.
+ * - $content: Block content.
+ * - $block->module: Module that generated the block.
+ * - $block->delta: An ID for the block, unique within each module.
+ * - $block->region: The block region embedding the current block.
+ * - $classes: String of classes that can be used to style contextually through
+ *   CSS. It can be manipulated through the variable $classes_array from
+ *   preprocess functions. The default values can be one or more of the
+ *   following:
+ *   - block: The current template type, i.e., "theming hook".
+ *   - block-[module]: The module generating the block. For example, the user
+ *     module is responsible for handling the default user navigation block. In
+ *     that case the class would be 'block-user'.
+ * - $title_prefix (array): An array containing additional output populated by
+ *   modules, intended to be displayed in front of the main title tag that
+ *   appears in the template.
+ * - $title_suffix (array): An array containing additional output populated by
+ *   modules, intended to be displayed after the main title tag that appears in
+ *   the template.
+ *
+ * Helper variables:
+ * - $classes_array: Array of html class attribute values. It is flattened
+ *   into a string within the variable $classes.
+ * - $block_zebra: Outputs 'odd' and 'even' dependent on each block region.
+ * - $zebra: Same output as $block_zebra but independent of any block region.
+ * - $block_id: Counter dependent on each block region.
+ * - $id: Same output as $block_id but independent of any block region.
+ * - $is_front: Flags true when presented in the front page.
+ * - $logged_in: Flags true when the current user is a logged-in member.
+ * - $is_admin: Flags true when the current user is an administrator.
+ * - $block_html_id: A valid HTML ID and guaranteed unique.
+ *
+ * @ingroup templates
+ *
+ * @see bootstrap_preprocess_block()
+ * @see template_preprocess()
+ * @see template_preprocess_block()
+ * @see bootstrap_process_block()
+ * @see template_process()
+ */
+#}
+{#%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+    'clearfix',
+  ]
+%#}
+{#
+  * Case statuses *
+    INCOMING  = 10;
+    AVAILABLE = 20;
+    REQUESTED = 30;
+    ASSIGNED  = 40;
+    RESOLVED  = 50;
+    ARCHIVED  = 60;
+#}
+
+<ul id="management-tab-data" class="hide" aria-hidden="true">
+  <span class="tab-info incoming-tab pl10" data-placement="case-management">
+    <span class="label label-danger">{{ counts.10 }}</span>
+  </span>
+  <span class="tab-info available-tab pl10" data-placement="case-management/available">
+     <span class="label label-warning">{{ counts.20 }}</span>
+  </span>
+  <span class="tab-info requested-tab pl10" data-placement="case-management/requested">
+     <span class="label label-info">{{ counts.30 }}</span>
+  </span>
+  <span class="tab-info assigned-tab pl10" data-placement="case-management/assigned">
+    <span class="label label-success">{{ counts.40 }}</span>
+  </span>
+  <span class="tab-info resolved-tab pl10" data-placement="case-management/resolved">
+    <span class="label label-primary">{{ counts.50 }}</span>
+  </span>
+{#   <span class="tab-info archived-tab pl10" data-placement="case-management/archived">
+    <span class="label label-warning">{{ counts.60 }}</span>
+  </span> #}
+</ul>

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: uer_image
+label: uer_image
+effects:
+  f67c943c-6921-481c-8b6b-b7b0d57734b3:
+    uuid: f67c943c-6921-481c-8b6b-b7b0d57734b3
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 150
+      height: 150

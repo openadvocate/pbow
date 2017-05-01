@@ -1,0 +1,100 @@
+{#
+/**
+ * @file
+ * Default theme implementation to present all user data.
+ *
+ * This template is used when viewing a registered user's page,
+ * e.g., example.com/user/123. 123 being the user's ID.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ *   print a subset such as 'content.field_example'. Fields attached to a user
+ *   such as 'user_picture' are available as 'content.user_picture'.
+ * - attributes: HTML attributes for the container element.
+ * - user: A Drupal User entity.
+ *
+ * @see template_preprocess_user()
+ *
+ * @ingroup themeable
+ */
+  {{ attributes }}
+  {{- content -}}
+#}
+
+<div class="row">
+  <div class="col-sm-8">
+    {% if content %}
+      <div class="card">
+
+        <div class="row">
+          <div class="col-sm-3 pull-left">
+            {% if user_pic %}
+              <img style="min-width: 100%;" class="img-circle img-thumbnail" src="{{ user_pic }}">
+              {# {{ content.user_picture }} #}
+            {% endif %}
+          </div>
+
+          <div class="col-sm-9">
+            {# <h1>{{user_name}}</h1> #}
+
+              <div class="mt20">
+                {% if content.field_bar_email %}
+                  {{- content.field_bar_email -}}
+                {% endif %}
+              </div>
+              <div class="mt10">
+                {% if content.field_bar_id %}
+                  {{- content.field_bar_id -}}
+                {% endif %}
+              </div>
+
+              {% if user_since %}
+                <div class="mt10">
+                  <div class="field--label">Joined</div>
+                  <div class="field--item">{{ user_since }}</div>
+                </div>
+                <div class="mt10">
+                  <div class="field--label">Last Access</div>
+                  <div class="field--item">{{ user_access }}</div>
+                </div>
+              {% endif %}
+
+              <div class="mt10">
+                {% if content.field_bio %}
+                  {{- content.field_bio -}}
+                {% endif %}
+              </div>
+
+              <hr>
+
+              <a href="/dashboard"><h2>My Cases</h2></a>
+              <ul class="list-unstyled pl20">
+                <li class="pb10">
+                  <span class="badge req-requested-cnt">{{ achievements.requested }}</span>
+                  Requested Cases
+                </li>
+                <li class="pb10">
+                  <span class="badge req-assigned-cnt">{{ achievements.assigned }}</span>
+                  Assigned Cases
+                </li>
+                <li class="pb10">
+                  <span class="badge req-resolved-cnt">{{ achievements.resolved }}</span>
+                  Completed Cases
+                </li>
+              </ul>
+
+          </div>
+        </div>
+
+        <div class="row mt20">
+          <div class="col-sm-12">
+
+          </div>
+        </div>
+
+      </div>
+    {% endif %}
+  </div>
+  <div class="col-sm-4">
+  </div>
+</div>

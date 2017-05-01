@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: c4zaT5cyPxuTXI6JOWt3qRtMvICT9tHB6d9a5VG-CmQ
+id: feedback
+label: 'Contact form for Attorneys'
+recipients:
+  - test@pbow.dev
+reply: ''
+weight: 0
+message: 'Your message has been sent.'
+redirect: /contact

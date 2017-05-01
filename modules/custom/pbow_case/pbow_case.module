@@ -1,0 +1,282 @@
+<?php
+
+use Drupal\pbow_case\Pbow;
+use Drupal\Core\Site\Settings;
+use Drupal\node\NodeInterface;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
+
+/**
+ * @file
+ * PBOW Case module.
+ */
+
+/**
+ * Implements hook_node_access().
+ */
+function pbow_case_node_access(NodeInterface $node, $op, AccountInterface $account) {
+  if ($node->bundle() == 'case') {
+    if ($op == 'view' and !Pbow::isStaffRole()) {
+      // Blocks to anon users is already handled as a panel page variant.
+      if ($node->field_case_status->value < Pbow::AVAILABLE) {
+        return AccessResult::forbidden();
+      }
+
+      if ($node->field_case_status->value > Pbow::REQUESTED and !Pbow::userIsAssigned($node, $account)) {
+        return AccessResult::forbidden();
+      }
+    }
+    elseif ($op == 'delete' and Pbow::isStaffRole()) {
+      if (empty($node->field_case_status->value) or $node->field_case_status->value == Pbow::INCOMING) {
+        return AccessResult::allowed();
+      }
+    }
+  }
+
+  return AccessResult::neutral();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function pbow_case_theme($existing, $type, $theme, $path) {
+  return [
+    'pbow_case_body' => [
+      'template' => 'block--pbow-case-body',
+      'variables' => ['case' => NULL],
+    ],
+    'pbow_case_parties' => [
+      'template' => 'block--pbow-case-parties',
+      'variables' => ['case' => NULL],
+    ],
+    'pbow_case_parties_check' => [
+      'template' => 'block--pbow-case-parties-check',
+      'variables' => ['form' => NULL],
+    ],
+    'pbow_case_request' => [
+      'template' => 'block--pbow-case-request',
+      'variables' => ['form' => NULL],
+    ],
+    'pbow_case_status_staff' => [
+      'template' => 'block--pbow-case-status-staff',
+      'variables' => ['case' => NULL],
+    ],
+    'pbow_case_status_user' => [
+      'template' => 'block--pbow-case-status-user',
+      'variables' => ['case' => NULL],
+    ],
+    'pbow_case_management_counts' => [
+      'template' => 'block--pbow-case-management-counts',
+      'variables' => ['counts' => NULL],
+    ],
+    'pbow_case_import' => [
+      'template' => 'block--pbow-case-import',
+      'variables' => ['counts' => NULL],
+    ],
+    'pbow_case_dashboard_card' => [
+      'template' => 'block--pbow-case-dashboard-card',
+      'variables' => ['counts' => NULL],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function pbow_case_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (in_array($form_id, ['node_case_form', 'node_case_edit_form'])) {
+    // Highlight internal fields (user-1).
+    if (\Drupal::currentUser()->id() == 1) {
+      $danger_style = 'background-color: #f2dede;';
+
+      $form['field_case_source']  ['#attributes']['style'] =
+      $form['field_case_status']  ['#attributes']['style'] =
+      $form['field_case_assigned']['#attributes']['style'] =
+
+      $form['field_case_time_incoming'] ['#attributes']['style'] =
+      $form['field_case_time_available']['#attributes']['style'] =
+      $form['field_case_time_requested']['#attributes']['style'] =
+      $form['field_case_time_assigned'] ['#attributes']['style'] =
+      $form['field_case_time_completed']['#attributes']['style'] =
+
+      $form['field_case_check_id']   ['#attributes']['style'] =
+      $form['field_case_check_party']['#attributes']['style'] =
+      $form['field_case_check_all']  ['#attributes']['style'] =
+
+      $form['field_case_status_log']        ['#attributes']['style'] =
+      $form['field_case_resolve_date']      ['#attributes']['style'] =
+      $form['field_case_resolve_hours_att'] ['#attributes']['style'] =
+      $form['field_case_resolve_hours_para']['#attributes']['style'] =
+      $form['field_case_resolve_outcome']   ['#attributes']['style'] =
+      $form['field_case_resolve_close_type']['#attributes']['style'] =
+      $form['field_case_resolve_note']      ['#attributes']['style'] = $danger_style;
+
+    }
+    // Hide internal fields (non user-1).
+    else {
+      $form['field_case_source']  ['#access'] =
+      $form['field_case_status']  ['#access'] =
+      $form['field_case_assigned']['#access'] =
+
+      $form['field_case_time_incoming'] ['#access'] =
+      $form['field_case_time_available']['#access'] =
+      $form['field_case_time_requested']['#access'] =
+      $form['field_case_time_assigned'] ['#access'] =
+      $form['field_case_time_completed']['#access'] =
+
+      $form['field_case_check_id']   ['#access'] =
+      $form['field_case_check_party']['#access'] =
+      $form['field_case_check_all']  ['#access'] =
+
+      $form['field_case_status_log']        ['#access'] =
+      $form['field_case_resolve_time_spent']['#access'] =
+      $form['field_case_resolve_outcome']   ['#access'] =
+      $form['field_case_resolve_note']      ['#access'] = FALSE;
+    }
+
+    $form['#validate'][] = 'pbow_case_form_custom_validate';
+  }
+}
+
+function pbow_case_form_custom_validate(array $form, FormStateInterface $form_state) {
+  $case_id = $form_state->getValue('field_case_id')[0]['value'];
+
+  if ($node = $form_state->getFormObject()->getEntity()) {
+    if ($error = pbow_case_check_duplicate_id($case_id, $node->id())) {
+      $form_state->setErrorByName('field_case_id', $error);
+    }
+
+    if (!$node->id()) {
+      $form_state->setValue('field_case_source', ['man']);
+    }
+  }
+}
+
+/**
+ * Impelements hook_ENTITY_TYPE_presave().
+ * 
+ * Run checks on new Case and set status.
+ * - Check for duplicate case id
+ * - Check for same parties
+ */
+function pbow_case_node_presave(Drupal\Core\Entity\EntityInterface $node) {
+  if ($node->getType() == 'case' and $node->isNew()) {
+    $check_all = TRUE;
+
+    // Check duplicate case id.
+    if ($node->field_case_check_id->value = pbow_case_check_duplicate_id($node->field_case_id->value, $node->id())) {
+      $check_all = FALSE;
+    }
+
+    // Check same parties.
+    if ($msg = $node->field_case_check_party->value = pbow_case_check_same_party($node)) {
+      drupal_set_message("Case '{$node->title->value}': $msg", 'warning');
+
+      $check_all = FALSE;
+    }
+
+    // Set status to incoming.
+    $node->set('field_case_check_all', (int)$check_all);
+    $node->set('field_case_status', Pbow::INCOMING);
+    $node->set('field_case_time_incoming', Pbow::now());
+  }
+}
+
+/**
+ * Check if Case ID has duplicates.
+ * 
+ * @return 0 (no error) or error string.
+ */
+function pbow_case_check_duplicate_id($case_id, $nid) {
+  if ($case_id) {
+    $nids = \Drupal::entityQuery('node')
+      ->condition('status', 1)
+      ->condition('type', 'case')
+      ->condition('nid', (int)$nid, '<>')
+      ->condition('field_case_id', $case_id)
+      ->execute();
+
+    if (count($nids)) {
+      return 'Same case ID with cases (' . join(', ', $nids) . ')';
+    }
+
+    return 0;
+  }
+
+  return 'No case id entered.';
+}
+
+function pbow_case_check_same_party($case) {
+  $client_names = array_merge(
+    $case->field_case_client_name->getValue(),
+    $case->field_case_client_alias->getValue()
+  );
+
+  $client_nids = $adverse_nids = [];
+
+  foreach ($client_names as $name) {
+    $query = \Drupal::entityQuery('node');
+
+    $or_group = $query->orConditionGroup()
+      ->condition('field_case_client_name', $name)
+      ->condition('field_case_client_alias', $name)
+      ->condition('field_case_adverse_name', $name)
+      ->condition('field_case_adverse_alias', $name);
+
+    $nids = $query
+      ->condition('status', 1)
+      ->condition('type', 'case')
+      ->condition($or_group)
+      ->execute();
+
+    $client_nids = array_unique(array_merge($client_nids, $nids));
+  }
+
+  $adverse_names = array_merge(
+    $case->field_case_adverse_name->getValue(),
+    $case->field_case_adverse_alias->getValue()
+  );
+
+  foreach ($adverse_names as $name) {
+    $query = \Drupal::entityQuery('node');
+
+    $or_group = $query->orConditionGroup()
+      ->condition('field_case_client_name', $name)
+      ->condition('field_case_client_alias', $name)
+      ->condition('field_case_adverse_name', $name)
+      ->condition('field_case_adverse_alias', $name);
+
+    $nids = $query
+      ->condition('status', 1)
+      ->condition('type', 'case')
+      ->condition($or_group)
+      ->execute();
+
+    $adverse_nids = array_unique(array_merge($adverse_nids, $nids));
+  }
+
+  // Get case nids that have both client name and adverse name.
+  $case_nids = array_intersect($client_nids, $adverse_nids);
+  sort($case_nids);
+
+  if (count($case_nids)) {
+    return 'Same parties as cases (' . join(', ', $case_nids) . ')';
+  }
+
+  return 0;
+}
+
+function pbow_case_form_node_form_alter(&$form, FormStateInterface $form_state) {
+
+  if (!empty($form['body'])) {
+    $form['body']['widget'][0]['#title'] = 'Case Description';    
+  }
+  if (!empty($form['field_case_id'])) {
+    $form['field_case_id']['#attributes']['class'][] = 'col-sm-12';
+  }
+  if (!empty($form['field_case_partner'])) {
+    $form['field_case_partner']['#attributes']['class'][] = 'col-sm-12 fieldset-card-inside';
+  }
+
+}

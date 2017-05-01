@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - user
+id: term_page
+label: 'Term page'
+description: 'Replace core''s /taxonomy/term/<tid> page.'
+use_admin_theme: false
+path: '/taxonomy/term/{taxonomy_term}'
+access_logic: and
+access_conditions:
+  -
+    id: user_role
+    roles:
+      administrator: administrator
+      staff: staff
+    negate: false
+    context_mapping:
+      user: current_user
+parameters: {  }

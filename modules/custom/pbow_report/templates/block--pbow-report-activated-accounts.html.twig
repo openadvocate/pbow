@@ -1,0 +1,67 @@
+<div class="row">
+  <div class="col-xs-8 col-sm-6 text-center">
+    <h4>Activated Accounts</h4>
+    <canvas id="chart-loggedin-users" width="222" height="222" style="display: block; width: 222px; height: 222px;"></canvas>
+
+    <script>
+      new Chart("chart-loggedin-users", {
+        type: 'pie',
+        data: {
+          labels: [
+            "Logged in at least once",
+            "Never logged in"
+          ],
+          datasets: [{
+            data: [{{ data.loggedin }}, {{ data.never_loggedin }}],
+            backgroundColor: [
+              'rgba(54, 235, 126, 0.5)',
+              'rgba(255, 206, 86, 0.5)'
+            ],
+            borderColor: [
+              'rgba(54, 235, 126, 1)',
+              'rgba(255, 206, 86, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true,
+        }
+      });
+    </script>
+
+  </div>
+  <div class="col-xs-8 col-sm-6 text-center">
+    <h4>Case by Partner</h4>
+
+    <canvas id="chart-case-by-partner" width="222" height="222" style="display: block; width: 222px; height: 222px;"></canvas>
+
+    <script>
+      new Chart("chart-case-by-partner", {
+        type: 'pie',
+        data: {
+          labels: [
+            "ILAS",
+            "IVLP"
+          ],
+          datasets: [{
+            data: [{{ data.ilas }} , {{ data.ivlp }}],
+            backgroundColor: [
+              'rgba(170, 197, 156, 0.5)',
+              'rgba(103, 146, 139, 0.5)'
+            ],
+            borderColor: [
+              'rgba(170, 197, 156, 1)',
+              'rgba(103, 146, 139, 1)'
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          responsive: true
+        }
+      });
+    </script>
+
+  </div>
+</div>

@@ -1,0 +1,422 @@
+
+// ========================
+//      Page.less
+// ========================
+
+// Home_page_styles
+// Basic_page_styles
+// Page_activate_styles
+// Case_detail_page
+// Case_management_page
+// dashboard_user_page
+
+
+body.path-frontpage {
+  margin: 0;
+
+  .lg-icon {
+    font-size: 45px;
+  }
+
+  .wide-btn {
+    width: 120px;
+  }
+
+  .navbar-header {
+    .clearfix;
+    float: none;
+    .region-navigation{
+      .clearfix;
+    }
+
+    a.navbar-brand{
+      color: #fff;
+    }
+  }
+
+  #navbar {
+    position: relative;
+    z-index: 1000;
+  }
+
+  // #navbar ,
+  // .navbar-static-top {
+  //   background: no-repeat;
+  //   border: none;
+  //   color: #fff;
+  //   a{
+  //     color: #fff;
+  //   }
+  // }
+
+  #block-pbow-main-menu {
+    float: left;
+    margin: 0;
+  }
+
+  #block-pbow-account-menu {
+    float: right !important;
+  }
+
+  .home_stat_wide{
+    .stat_text{
+      margin-top: 29px;
+    }
+    .stat_number{
+      text-align: center;
+      @media (max-width: @screen-md-max) {
+      }
+    }
+  }
+
+  .home-icons{
+    color: #666;
+  }
+  .home-arrow{
+    position: absolute;
+    left: 0;
+    top: 20px;
+    color: #999;
+    @media (max-width: @screen-sm-max) {
+      display: none;
+    }
+  }
+
+}
+
+.navbar-header {
+  .clearfix;
+  float: none;
+  .region-navigation{
+    .clearfix;
+  }
+}
+
+#block-pbow-main-menu {
+  float: left;
+  margin: 0;
+}
+
+#block-pbow-account-menu {
+  float: right !important;
+}
+
+
+// -------------------------------- Home_page_styles
+
+.band1 {
+  position: relative;
+  padding:100px 0;
+  background-attachment: scroll;
+  background-clip: border-box;
+  background-color: rgba(0, 0, 0, 0);
+  background-image: url("../images/bg2s-1.jpg");
+  background-origin: padding-box;
+  background-position: center center; 
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  margin-top: -70px;
+
+  padding: 160px 0 160px;
+
+  color: #fff;
+  .text-content{
+    position: relative;
+    text-shadow: 3px 4px 4px rgba(0, 0, 0, 0.4);
+    h1{
+      font-size: 74px;
+    }
+    h2{
+      font-size: 40px;
+    }
+    .button-holder{
+      display: none;
+      padding-top: 60px;
+    }
+    
+  }
+  .band1-shadow{
+    background: rgba(0, 0, 0, 0.6) none repeat scroll 0 0;
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+
+.pbow-admin-navbar {
+  display: none;
+}
+
+body.path-frontpage{
+  &.user-logged-in{
+    .band1{
+      margin-top: -20px;
+    }
+    #navbar{
+      // .navbar-inverse;
+    }
+
+    .pbow-admin-navbar {
+      display: block;
+    }
+
+  }
+}
+
+
+.meta-title{
+
+}
+
+
+.band2 {
+  padding: 50px 0 100px;
+}
+
+.band3 {
+  padding: 60px 0 140px;
+  background: #fff;
+}
+
+.band4 {
+  color: #fff;
+  padding: 20px 0 40px;
+  // background: #282537 radial-gradient(circle farthest-corner at center top , #3c3b52 0%, #252233 80%) repeat scroll 0 0;
+  background: #666;
+  h3{
+    font-size: 49px;
+    font-weight: bold;
+  }
+  p{
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 25px;
+  }
+}
+
+.band5 {
+  padding: 60px 0 70px;
+}
+
+.band6 {
+  padding: 60px 0 140px;
+  background: #fff;
+}
+
+.band7 {
+  padding: 60px 0 140px;
+  
+}
+
+
+// -------------------------------- Basic_page_styles
+
+.page-node-type-page{
+
+  .content{
+    .mx_page_base_font;
+  }
+  .contextual-region.page{
+    h2:first-child {
+      .page-header;
+      .h1;
+      margin-bottom: 20px;
+
+      a{
+        color: #222;
+        cursor: text;
+        display: block;
+        padding-bottom: 7px;
+
+        &:hover{
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+
+// -------------------------------- Page_activate_styles
+
+.path-activate {
+  .form-item-agree{
+    label{
+      font-size: 18px;
+    }
+    input{
+      margin-top: 8px;
+    }
+  }
+  .form-item-name {
+    display: none;
+  }
+  .main-container > .row > .col-sm-12 {
+
+  }
+  .form-type-checkbox{
+    padding-bottom: 20px;
+  }
+  .terms-textarea{
+    height: 300px;
+    background: #dfdfdf;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 100%;
+  }
+  .term-agree-list{
+    padding-bottom: 10px;
+  }
+  .terms-textarea-inside{
+    padding: 15px;
+  }
+}
+.term-agree-list{
+  padding-top: 20px;
+}
+
+
+// -------------------------------- Case_detail_page
+
+.panel-title{
+  &.case-indicator-title{
+    padding: 0;
+    a{
+      padding: 10px 15px;
+      display: block;
+      label{
+        line-height: 17px;
+      }
+    }
+  }
+}
+
+// -------------------------------- Case_management_page
+
+.path-case-management{
+  .tabs--primary.nav.nav-tabs{
+    margin-bottom: -1px;
+  }
+}
+
+.views-field-field-case-check-party{
+  min-width: 100px;
+}
+
+.view-id-case_management{
+  position: relative;
+  .col-sm-9.pt10{
+    margin-top: 5px;
+    .form-item{
+      label{
+        display: block;
+        padding-bottom: 4px;
+      }
+    }
+    #edit-actions{
+      margin-top: 20px;
+    }
+  }
+  #edit-header{
+    position: absolute;
+    top: 0;
+    right: 0;
+    .clearfix;
+
+    .form-type-select{
+      float: left;
+    }
+    #edit-actions--2{
+      float: left;
+    }
+    #edit-submit--2{
+      margin-top: 26px;
+    }
+  }
+  .links.btn-group{
+    width: 120px;
+  }
+}
+
+.views-field-node-bulk-form{
+  .form-type-checkbox{
+    input{
+      margin-left: 0;
+    }
+  }
+}
+
+// --------------------------------------------- dashboard_user_page
+
+.path-dashboard {
+  .main-container {
+    table {
+      thead {
+        display: none;
+      }
+      td{
+        border-top: 0;
+        border-bottom: 1px solid #ddd;
+      }
+      tr{
+        &:last-child{
+          td{
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ---------------------------------------------
+
+.path-node.page-node-type-case.user-logged-in,
+.node-case-form {
+
+  #node-case-edit-form{
+    @media (min-width: @screen-md-min) {
+      width: 66%;
+    }
+  }
+
+  #edit-field-county {
+    -webkit-column-count: 3; /* Chrome, Safari, Opera */
+    -moz-column-count: 3; /* Firefox */
+    column-count: 3;
+    @media (max-width: @screen-md-max) {
+      -webkit-column-count: 2; /* Chrome, Safari, Opera */
+      -moz-column-count: 2; /* Firefox */
+      column-count: 2;
+    }
+  }
+  .tabledrag-toggle-weight.btn-sm.btn.btn-default{
+    display: none;
+  }
+  .form-required:after{
+    margin-left: 5px;
+  }
+  .field-multiple-drag{
+    display: none;
+  }
+}
+#edit-field-case-partner-wrapper{
+  padding-top: 10px;
+  legend{
+    border: none;
+    margin: 0;
+    .control-label;
+  }
+}
+
+// -------------------------------- User_page
+
+.user-logged-in.path-user{
+  .fieldgroup{
+    .form-checkboxes{
+      column-count: 2;
+    }
+  }
+}

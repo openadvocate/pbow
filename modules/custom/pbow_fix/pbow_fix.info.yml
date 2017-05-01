@@ -1,0 +1,5 @@
+name: PBOW Fix
+type: module
+description: Fix or override Drupal settings.
+core: 8.x
+package: PBOW

@@ -1,0 +1,158 @@
+<?php
+
+use Drupal\Core\Url;
+use Drupal\Core\user\Access;
+
+/**
+ * Implements hook_form_alter().
+ * Adjusts form on login page
+ */
+function super_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id){
+  
+  if ($form_id == 'user_login_form' || $form_id == 'user_pass') {
+    $config = \Drupal::config('super_login.settings');
+           
+    // Global form functions          
+    $form['name']['#attributes']['autofocus'] = 'autofocus';    
+    unset($form['name']['#description']);
+    unset($form['pass']['#description']);
+    $path = drupal_get_path('module', 'super_login');
+    if ($config->get('super_login.css') == 1){
+        $form['#attached']['library'][] = 'super_login/super_login_css';
+        if ($config->get('super_login.button_theme') == 1){
+          $form['#attached']['library'][] = 'super_login/super_login_buttons';
+        }
+      }
+  }  
+    
+  if ($form_id == 'user_login_form'){
+    $form['#attached']['library'][] = 'super_login/super_login_js';
+    
+   $form['title'] = array(        
+      '#markup' => '<p class="login-title">' . t($config->get('super_login.login_title')) . '</p>',
+      '#weight' => -100,        
+    );       
+    
+    
+    $url = Url::fromRoute('user.pass');
+    $internal_link = \Drupal::l(t($config->get('super_login.forgot_pw_text')), $url);
+    
+    $form['reset'] = array(
+      '#markup' => '<p class="forgot-password">' . $internal_link . '</p>',
+      '#weight' => 1,        
+    );
+    
+    if ($config->get('super_login.capslock')){
+      $form['capslock'] = array(
+        '#markup' => '<div id="capslockdiv"><p>' .  t($config->get('super_login.capslock_msg')) . '</p></div>',
+        '#weight' => 2,        
+      );  
+    }       
+    
+   $user_config = \Drupal::config('user.settings'); 
+   if ($user_config->get('register') != USER_REGISTER_ADMINISTRATORS_ONLY){
+        $actions_suffix = '<div class="actions-suffix">';
+        $url = Url::fromRoute('user.register');
+        
+        $link_options = array(
+          'attributes' => array(
+            'class' => array(
+              'super-login-register',              
+            ),           
+          ),
+        );
+        $url->setOptions($link_options);
+        $internal_link = \Drupal::l(t($config->get('super_login.new_account_text')), $url);        
+        $actions_suffix .= $internal_link;
+        $actions_suffix .= '</div>';
+        $form['actions']['#suffix'] = $actions_suffix;
+   }
+    
+    $form['name']['#title'] = t($config->get('super_login.login_text'));
+    $form['name']['#size'] = 50;
+    $form['pass']['#size'] = 50;      
+    
+    // Set form placeholder text
+    if ($config->get('super_login.placeholder')){
+      $form['name']['#attributes']['title'] = $form['name']['#title'];      
+      $form['pass']['#attributes']['title'] = $form['pass']['#title'];
+      $form['name']['#attributes']['placeholder'] = $form['name']['#title'];
+      $form['pass']['#attributes']['placeholder'] = $form['pass']['#title'];  
+    }
+    
+    if (!$config->get('super_login.new_account_text')){
+        $form['#attributes']['autocomplete'] = 'off';
+        $form['name']['#attributes']['autocomplete'] = 'off';
+        $form['pass']['#attributes']['autocomplete'] = 'off';
+      }
+    $form['#validate'] = is_array($form['#validate']) ? $form['#validate'] : array();    
+    array_unshift($form['#validate'],'super_login_user_login_validate');    
+     
+
+          
+  }
+
+  if ($form_id == 'user_pass'){
+    $form['#attached']['library'][] = 'super_login/super_login_pw_js';
+        
+    $form['title'] = array(
+      '#markup' => '<p class="login-title">' . t($config->get('super_login.password_reset_title')) . '</p>',
+      '#weight' => -100,        
+    );    
+    
+    $url = Url::fromRoute('user.login');
+    $internal_link = \Drupal::l(t($config->get('super_login.back_link')), $url);
+    
+    $form['reset'] = array(
+      '#markup' => '<p class="back-to-login">' . $internal_link . '</p>',
+      '#weight' => 1,        
+    );       
+  } 
+}
+
+/**
+ * Custom validation for user login form
+ *
+*/
+function super_login_user_login_validate(&$form, \Drupal\Core\Form\FormStateInterface $form_state) {
+  $config = \Drupal::config('super_login.settings');
+  
+  if ($config->get('super_login.login_type') == 0){
+    if ($form_state->getValue('name')){
+      if ($name = db_query("SELECT name FROM {users_field_data} WHERE LOWER(mail) = LOWER(:name)", array(
+        ':name' => $form_state->getValue('name'),
+      ))->fetchField()) {
+        $form_state->setValue('name', array($name));
+      }
+    }
+  }  
+  
+  if ($config->get('super_login.login_type') == 2){  
+    if ($form_state->getValue('name')){
+      if ($name = db_query("SELECT name FROM {users_field_data} WHERE LOWER(mail) = LOWER(:name)", array(
+        ':name' => $form_state->getValue('name'),
+      ))->fetchField()) {
+        $form_state->setValue('name', array($name));
+      }else{
+        $form_state->setValue('name', array('-'));
+      }
+    }
+  }
+  
+}
+
+/**
+ * Implements hook_local_tasks_alter().
+ * Removes tabs from login page
+ */
+function super_login_menu_local_tasks_alter(&$data, $route_name){
+   if ($route_name == 'user.login'){
+     unset($data['tabs'][0]['user.pass']);
+     unset($data['tabs'][0]['user.register']);
+   }
+   if ($route_name == 'user.pass'){
+     unset($data['tabs'][0]['user.pass']);
+     unset($data['tabs'][0]['user.register']);
+     unset($data['tabs'][0]['user.login']);
+   }
+}

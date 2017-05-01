@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'ZIP Code'
+vid: zip_code
+description: ''
+hierarchy: 0
+weight: 0

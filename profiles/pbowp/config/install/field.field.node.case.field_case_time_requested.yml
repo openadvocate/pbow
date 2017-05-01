@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_case_time_requested
+    - node.type.case
+  module:
+    - datetime
+id: node.case.field_case_time_requested
+field_name: field_case_time_requested
+entity_type: node
+bundle: case
+label: 'Timestamp - Requested'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

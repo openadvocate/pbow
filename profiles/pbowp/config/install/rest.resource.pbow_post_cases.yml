@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_api
+    - serialization
+    - user
+id: pbow_post_cases
+plugin_id: pbow_post_cases
+granularity: method
+configuration:
+  POST:
+    supported_formats:
+      - json
+    supported_auth:
+      - cookie

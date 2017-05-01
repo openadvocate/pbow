@@ -1,0 +1,7 @@
+pbow_fix:
+  version: VERSION
+  js:
+    js/pbow_fix.my_zip.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal

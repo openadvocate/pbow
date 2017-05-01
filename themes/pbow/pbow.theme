@@ -1,0 +1,111 @@
+<?php
+/**
+ * @file
+ * Bootstrap sub-theme. 
+ *
+ * Place your custom PHP code in this file.   kint
+ */
+
+use Drupal\image\Entity\ImageStyle;
+use Drupal\pbow_case\Pbow;
+
+function pbow_preprocess_page(&$vars){
+
+  // if ($node = \Drupal::request()->attributes->get('node')) {
+  //   $node = \Drupal::routeMatch()->getParameter('node');
+  //   $typeName = $node->bundle();
+  //   $atitle = $node->getTitle();
+  // }
+
+  $current_path = \Drupal::request()->getRequestUri();
+  // $path = \Drupal::service('path.current')->getPath();
+  $vars['current_path'] = $current_path;
+
+  if (!empty($current_path) && (substr( $current_path, 0, 6 ) === "/user/")) {
+    // $routeMatch = \Drupal::routeMatch();
+    // $route = \Drupal::routeMatch()->getRouteName();
+  }
+  elseif ($current_path == '/search-case') {
+    $vars['#attached']['library'][] = 'pbow/search-case';
+  }
+
+  if ((\Drupal::service('path.matcher')->matchPath($current_path, '/user/*/tags')) ||
+   (\Drupal::service('path.matcher')->matchPath($current_path, '/node/*/edit')) ){
+    $vars['#attached']['library'][] = 'pbow/jquery-selectall';
+  }
+
+  // dpm($vars);
+  // if ( $user = \Drupal::request()->attributes->get('user') ) {
+
+  // // dpm($user->user_picture[0]);
+
+  // // if ( ! empty($vars['user']) ) {
+
+  //   // echo "string";
+
+  //   if($user->user_picture[0]){
+  //     $cover_image = $user->user_picture[0]->entity->getFileUri();
+  //     $image_url = ImageStyle::load('large')->buildUrl($cover_image);
+  //     // echo $image_url;
+  //     $vars['my_image'] = $image_url;
+  //   }
+  // }
+
+}
+
+// function pbow_preprocess_field(&$vars) {
+//   if ($vars['element']['#field_name'] == 'field_zip_code') {
+//     dpm($vars);
+//   }
+// }
+
+function pbow_preprocess_user(&$vars) {
+  $user = $vars['user'];
+
+  // user image
+  if (!empty($user->user_picture[0])) {
+    $cover_image = $user->user_picture[0]->entity->getFileUri();
+    $image_url = ImageStyle::load('uer_image')->buildUrl($cover_image);
+    $vars['user_pic'] = $image_url;
+
+    $vars['user_name'] = $user->getUsername();
+  }
+
+  if (\Drupal::currentUser()->hasPermission('access user profiles')) {
+    if ($user->access->value) {
+      $vars['user_since'] = date('F j, Y', $user->created->value);
+      $vars['user_access'] = date('F j, Y', $user->access->value);
+    }
+    else {
+      $vars['user_since'] = 'N/A';
+      $vars['user_access'] = 'N/A';
+    }
+  }
+
+  $vars['achievements'] = [
+    'requested' => Pbow::requestCount($user),
+    'assigned'  => Pbow::assignCount($user),
+    'resolved'  => Pbow::completeCount($user),
+  ];
+}
+
+function pbow_views_form_case_management_page1_incoming_form_alter(&$form, \Drupal\Core\Form\FormStateInterface &$form_state) {
+
+  // kint($form_id);
+  // if (in_array($form_id, ['views_form_case_management_page1_incoming'])) {
+  //   // kint($form);
+  //   echo $form['actions']['submit']['#value'];
+  //   $form['actions']['submit']['#value'] = 'Apply';
+  // }
+  // if (in_array($form_id, ['views_form_case_management_page1_incoming', ])) {
+  //   $key = ($form_id == 'views_form_case_management_page1_incoming') ? 'actions' : 'basic';
+  //   echo "string";
+  //   $form[$key]['submit']['#value'] = $this->t('Submit My Form');
+  //   $form[$key]['preview']['#access'] = FALSE;
+  // }
+}
+
+
+function pbow_preprocess_views_view_field(&$variables) {
+  $variables['output'] = $variables['field']->advancedRender($variables['row']);
+}

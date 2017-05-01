@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - pbow_homepage
+  theme:
+    - pbow
+id: pbowhomepagepartners
+theme: pbow
+region: band6
+weight: -11
+provider: null
+plugin: pbow_partner
+settings:
+  id: pbow_partner
+  label: 'PBOW Home Page Partners'
+  provider: pbow_homepage
+  label_display: visible
+  pbow_partner_1_text: 'ABC Legal Aid Services'
+  pbow_partner_2_text: 'ABC Volunteer Lawyers Program'
+  pbow_partner_3_text: 'Legal Services Corporation Pro Bono Innovation grant'
+visibility: {  }

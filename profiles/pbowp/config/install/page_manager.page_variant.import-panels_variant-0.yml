@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.import
+  module:
+    - panels
+    - pbow_case
+id: import-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    8db3b20c-765b-4abf-bf1f-cc66a3c5bcd3:
+      id: pbow_case_import
+      label: 'PBOW Case Import'
+      provider: pbow_case
+      label_display: '0'
+      region: top
+      weight: 0
+      uuid: 8db3b20c-765b-4abf-bf1f-cc66a3c5bcd3
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 4ec3dd86-bbe2-4226-a7fd-0a18b2149dcb
+  label: null
+  weight: 0
+  layout: bootstrap_2col_6_6
+  layout_settings: {  }
+  page_title: Import
+  storage_type: page_manager
+  storage_id: import-panels_variant-0
+  builder: standard
+page: import
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }
