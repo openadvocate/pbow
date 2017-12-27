@@ -76,6 +76,15 @@ variant_settings:
       weight: 1
       uuid: 64c6d456-4cf9-44bd-87f7-24b7c19e9b23
       context_mapping: {  }
+    93b7f7cc-1852-448e-8dfb-7232ea5f5dc4:
+      id: pbow_case_staff_notes
+      label: 'PBOW Case Staff Notes'
+      provider: pbow_case
+      label_display: '0'
+      region: left
+      weight: 2
+      uuid: 93b7f7cc-1852-448e-8dfb-7232ea5f5dc4
+      context_mapping: {  }
   id: panels_variant
   uuid: b36985f6-c4f4-44e9-a564-caedd7c6f460
   label: null

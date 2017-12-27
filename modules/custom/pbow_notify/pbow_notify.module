@@ -15,6 +15,7 @@ define('PET_ID_ASSIGN',    2);
 define('PET_ID_REJECT',    3);
 define('PET_ID_REVOKE',    4);
 define('PET_ID_MONTHLY',   5);
+define('PET_ID_DAILY',     6);
 
 /**
  * Implements hook_page_attachments().
@@ -93,33 +94,50 @@ function pbow_notify_send_mail($data) {
     \Drupal::logger('pbow_notify')->error("Error: (" . $e->getMessage() . ") trying to send email ($log)", array('%name' => $user->getUsername(), '%nid' => $nid));
   }
 }
+
 /**
  * Implements hook_cron().
  *
- * Remove older user notices (> 180 days). Notice field has 3 parts.
- * "status\ntitle\ntimestamp", i.e. "new\nExample notice blah blah\n1480964250"
+ * If there is no gurantee that cron runs every hour, check date (or month) to
+ * make sure it does not run multiple times per day (or per month).
  */
 function pbow_notify_cron() {
-  // Run once per day after midnight
-  if (date('G') === '0') {
-    if (REQUEST_TIME - \Drupal::state()->get('pbow_notify.cron', 0) > 3600) {
-      // Delete SQL: Seen user notices older than 180 days.
-      $sql = "DELETE FROM user__field_notices WHERE UNIX_TIMESTAMP() - SUBSTR(field_notices_value, -10) > 86400*180;";
+  // Run every night.
+  $today = date('Y-m-d', REQUEST_TIME);
+  $last_run_date = date('Y-m-d', \Drupal::state()->get('pbow_notify.cron.daily', 0));
 
-      Database::getConnection('default')->query($sql);
+  if ($last_run_date < $today) {
+    // Remove older user notices (> 180 days). Notice field has 3 parts.
+    $sql = "DELETE FROM user__field_notices WHERE UNIX_TIMESTAMP() - SUBSTR(field_notices_value, -10) > 86400*180;";
+    Database::getConnection('default')->query($sql);
 
-      \Drupal::state()->set('pbow_notify.cron', REQUEST_TIME);
+    // Push users to the queue and let queue send mails.
+    $uids = \Drupal::entityQuery('user')
+      ->condition('status', 1)
+      ->condition('uid', 1, '>')
+      ->condition('field_notification', 'daily')
+      ->execute();
+
+    if ($uids) {
+      $queue = \Drupal::queue('pbow_daily_alert_mail');
+      foreach ($uids as $uid) {
+        $queue->createItem($uid);
+      }
     }
+
+    \Drupal::state()->set('pbow_notify.cron.daily', REQUEST_TIME);
   }
 
-  // Run on 1st of each month.
+  // Run on the 1st of each month.
   // Push users to the queue and let QueueWorker plugin send mails.
-  if (date('j') === '1') {
-    if (REQUEST_TIME - \Drupal::state()->get('pbow_notify.cron.monthly', 0) > 86400) {
+  if (date('j') == 1) {
+    $this_month = date('Y-m', REQUEST_TIME);
+    $last_run_month = date('Y-m', \Drupal::state()->get('pbow_notify.cron.monthly', 0));
+
+    if ($last_run_month < $this_month) {
       $uids = \Drupal::entityQuery('user')
         ->condition('status', 1)
         ->condition('uid', 1, '>')
-        ->condition('access', REQUEST_TIME - 86400*90, '>') // visited site within 3 months
         ->condition('field_notification', 'monthly')
         ->execute();
 

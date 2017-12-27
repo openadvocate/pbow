@@ -23,6 +23,7 @@ dependencies:
     - field.field.node.case.field_case_resolve_note
     - field.field.node.case.field_case_resolve_outcome
     - field.field.node.case.field_case_source
+    - field.field.node.case.field_case_staff_notes
     - field.field.node.case.field_case_status
     - field.field.node.case.field_case_status_log
     - field.field.node.case.field_case_time_assigned
@@ -50,7 +51,7 @@ third_party_settings:
         - field_problem_code
         - field_county
       parent_name: ''
-      weight: 32
+      weight: 27
       label: Tags
       format_type: fieldset
       format_settings:
@@ -62,7 +63,7 @@ third_party_settings:
       children:
         - field_case_id
       parent_name: ''
-      weight: 8
+      weight: 9
       label: 'Case Id'
       format_type: html_element
       format_settings:
@@ -79,7 +80,7 @@ third_party_settings:
       children:
         - field_case_partner
       parent_name: ''
-      weight: 9
+      weight: 10
       label: 'Partner Id'
       format_type: html_element
       format_settings:
@@ -97,7 +98,7 @@ third_party_settings:
         - field_case_client_name
         - field_case_client_alias
       parent_name: ''
-      weight: 11
+      weight: 12
       label: Client
       format_type: fieldset
       format_settings:
@@ -110,7 +111,7 @@ third_party_settings:
         - field_case_adverse_name
         - field_case_adverse_alias
       parent_name: ''
-      weight: 12
+      weight: 13
       label: 'Adverse Party'
       format_type: fieldset
       format_settings:
@@ -131,11 +132,13 @@ content:
       summary_rows: 3
       placeholder: ''
     third_party_settings: {  }
+    region: content
   created:
     type: datetime_timestamp
-    weight: 4
+    weight: 5
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_case_adverse_alias:
     weight: 14
     settings:
@@ -143,6 +146,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_case_adverse_name:
     weight: 13
     settings:
@@ -150,33 +154,38 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_case_assigned:
-    weight: 16
+    weight: 17
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: entity_reference_autocomplete
+    region: content
   field_case_check_all:
-    weight: 23
+    weight: 24
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
   field_case_check_id:
-    weight: 14
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-  field_case_check_party:
     weight: 15
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_case_check_party:
+    weight: 16
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
   field_case_client_alias:
     weight: 13
     settings:
@@ -184,6 +193,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_case_client_name:
     weight: 12
     settings:
@@ -191,16 +201,19 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_case_comments:
-    weight: 22
+    weight: 23
     settings: {  }
     third_party_settings: {  }
     type: comment_default
+    region: content
   field_case_deadline:
-    weight: 24
+    weight: 25
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_details:
     weight: 2
     settings:
@@ -208,6 +221,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
   field_case_id:
     weight: 9
     settings:
@@ -215,90 +229,115 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
   field_case_partner:
     weight: 10
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_case_source:
-    weight: 10
+    weight: 11
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
+  field_case_staff_notes:
+    weight: 3
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
   field_case_status:
-    weight: 13
+    weight: 14
     settings: {  }
     third_party_settings: {  }
     type: options_select
+    region: content
   field_case_status_log:
-    weight: 25
+    weight: 26
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
     type: string_textarea
+    region: content
   field_case_time_assigned:
-    weight: 20
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-  field_case_time_available:
-    weight: 18
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-  field_case_time_completed:
     weight: 21
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
-  field_case_time_incoming:
-    weight: 17
-    settings: {  }
-    third_party_settings: {  }
-    type: datetime_default
-  field_case_time_requested:
+    region: content
+  field_case_time_available:
     weight: 19
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
+    region: content
+  field_case_time_completed:
+    weight: 22
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_case_time_incoming:
+    weight: 18
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_case_time_requested:
+    weight: 20
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_case_type:
     weight: 31
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   field_county:
     type: options_buttons
     weight: 33
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_population:
     type: options_buttons
     weight: 30
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_problem_code:
     weight: 32
     settings: {  }
     third_party_settings: {  }
     type: options_buttons
+    region: content
   path:
     type: path
-    weight: 7
+    weight: 8
     settings: {  }
     third_party_settings: {  }
+    region: content
   promote:
-    type: boolean_checkbox
-    settings:
-      display_label: true
-    weight: 5
-    third_party_settings: {  }
-  sticky:
     type: boolean_checkbox
     settings:
       display_label: true
     weight: 6
     third_party_settings: {  }
+    region: content
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 7
+    third_party_settings: {  }
+    region: content
   title:
     type: string_textfield
     weight: 0
@@ -306,14 +345,16 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
   uid:
     type: entity_reference_autocomplete
-    weight: 3
+    weight: 4
     settings:
       match_operator: CONTAINS
       size: 60
       placeholder: ''
     third_party_settings: {  }
+    region: content
 hidden:
   field_case_resolve_close_type: true
   field_case_resolve_date: true

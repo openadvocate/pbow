@@ -11,6 +11,9 @@ type: list_string
 settings:
   allowed_values:
     -
+      value: daily
+      label: 'Send me an email when a new case matching my selected tags is posted'
+    -
       value: monthly
       label: 'Send me monthly summary'
   allowed_values_function: ''

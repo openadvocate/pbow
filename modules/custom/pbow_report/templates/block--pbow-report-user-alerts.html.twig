@@ -1,0 +1,31 @@
+<canvas id="chart-user-alerts" width="400" height="122" style="display: block; width: 400; height: 122px;"></canvas>
+
+<script>
+  var data = {
+    labels: ["No Alerts", "Daily Only", "Monthly Only", "Both"],
+    datasets: [
+        {
+            label: " ",
+            fill: false,
+            lineTension: 0.1,
+            backgroundColor: "rgba(75,192,192,0.5)",
+            borderColor: "rgba(75,192,192,1)",
+            data: [{{ data|join(',') }}],
+            spanGaps: false,
+            borderWidth: 1
+        }
+    ]
+  };
+
+  new Chart("chart-user-alerts", {
+    type: 'bar',
+    data: data,
+    options: {
+      responsive: true,
+      legend:{
+        display: false
+      },
+    }
+});
+
+</script>

@@ -985,7 +985,7 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -1729,6 +1729,7 @@ display:
         operator: AND
         groups:
           1: AND
+      display_comment: 'Bulk Operations widget have been hidden while the Case volume is low and they might confuse staff. Checkboxes in the first column are simply excluded from display, and Bulk Operation dropdowns are hidden via CSS in pbow/less/page.less.'
     cache_metadata:
       max-age: 0
       contexts:
@@ -3225,7 +3226,7 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -3784,7 +3785,7 @@ display:
           group_type: group
           admin_label: ''
           label: ''
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''

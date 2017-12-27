@@ -7,8 +7,8 @@ type: module
 
 configure: super_login.settings
 
-# Information added by Drupal.org packaging script on 2016-04-13
-version: '8.x-1.0-beta2'
+# Information added by Drupal.org packaging script on 2017-07-22
+version: '8.x-1.0'
 core: '8.x'
 project: 'super_login'
-datestamp: 1460577924
+datestamp: 1500734344

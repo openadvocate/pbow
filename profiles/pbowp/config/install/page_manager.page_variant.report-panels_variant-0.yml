@@ -35,7 +35,7 @@ variant_settings:
       provider: pbow_report
       label_display: visible
       region: right
-      weight: -2
+      weight: -1
       uuid: 48c18e1e-5e62-444b-b06e-c16871445938
       context_mapping: {  }
     317abe8d-2007-4468-abda-ad70a2c84b25:
@@ -71,7 +71,7 @@ variant_settings:
       provider: pbow_report
       label_display: visible
       region: right
-      weight: -1
+      weight: 0
       uuid: b40f0338-fc7d-47f3-af40-68263b5cf125
       context_mapping: {  }
     11b1d427-9ca1-4562-a1aa-d0599ed2f29a:
@@ -80,7 +80,7 @@ variant_settings:
       provider: pbow_report
       label_display: visible
       region: right
-      weight: 0
+      weight: 1
       uuid: 11b1d427-9ca1-4562-a1aa-d0599ed2f29a
       context_mapping: {  }
     2e318562-cada-45ec-bfec-b7f792c5df28:
@@ -89,8 +89,17 @@ variant_settings:
       provider: pbow_report
       label_display: visible
       region: right
-      weight: 1
+      weight: 2
       uuid: 2e318562-cada-45ec-bfec-b7f792c5df28
+      context_mapping: {  }
+    4c879098-3b29-4953-addc-5db977e5a6ee:
+      id: pbow_report_chart_user_alerts
+      label: 'Alert Settings for Activated Accounts'
+      provider: pbow_report
+      label_display: visible
+      region: right
+      weight: -2
+      uuid: 4c879098-3b29-4953-addc-5db977e5a6ee
       context_mapping: {  }
   id: panels_variant
   uuid: 49f6bd48-9139-4b5f-99c7-e8e620efe974

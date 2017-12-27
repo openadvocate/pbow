@@ -54,6 +54,19 @@ class ReportChartUserEngagement extends BlockBase {
         WHERE field_case_status_value = :status
       );", [':status' => Pbow::RESOLVED])->fetchField();
 
+    // Return table instead for path /report/table
+    if (Pbow::isReportTablePath()) {
+      return [
+        '#type'   => 'table',
+        '#rows'   => [
+          [['style' => 'font-weight: bold', 'data' => 'Activated'], $data[0]],
+          [['style' => 'font-weight: bold', 'data' => 'Terms'],     $data[1]],
+          [['style' => 'font-weight: bold', 'data' => 'Requested'], $data[2]],
+          [['style' => 'font-weight: bold', 'data' => 'Completed'], $data[3]],
+        ],
+      ];
+    }
+
     return [
       '#theme' => 'pbow_report_chart_user_engagement',
       '#data' => $data,

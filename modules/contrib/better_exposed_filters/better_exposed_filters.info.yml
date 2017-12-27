@@ -6,8 +6,8 @@ package: Views
 dependencies:
   - views
 
-# Information added by Drupal.org packaging script on 2016-06-21
-version: '8.x-3.0-alpha1'
+# Information added by Drupal.org packaging script on 2017-07-28
+version: '8.x-3.0-alpha3'
 core: '8.x'
 project: 'better_exposed_filters'
-datestamp: 1466481857
+datestamp: 1501274345

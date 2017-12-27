@@ -3,6 +3,14 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.user.compact
+    - field.field.user.user.field_bar_email
+    - field.field.user.user.field_bar_id
+    - field.field.user.user.field_bio
+    - field.field.user.user.field_case_type
+    - field.field.user.user.field_county
+    - field.field.user.user.field_notices
+    - field.field.user.user.field_notification
+    - field.field.user.user.field_population
     - field.field.user.user.user_picture
     - image.style.thumbnail
   module:
@@ -23,8 +31,15 @@ content:
       image_link: content
     third_party_settings: {  }
     label: hidden
+    region: content
 hidden:
   field_bar_email: true
   field_bar_id: true
+  field_bio: true
+  field_case_type: true
+  field_county: true
+  field_notices: true
+  field_notification: true
+  field_population: true
   field_zip_code: true
   member_for: true

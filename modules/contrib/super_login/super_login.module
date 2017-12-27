@@ -72,12 +72,19 @@ function super_login_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $fo
     $form['name']['#size'] = 50;
     $form['pass']['#size'] = 50;      
     
-    // Set form placeholder text
-    if ($config->get('super_login.placeholder')){
-      $form['name']['#attributes']['title'] = $form['name']['#title'];      
-      $form['pass']['#attributes']['title'] = $form['pass']['#title'];
-      $form['name']['#attributes']['placeholder'] = $form['name']['#title'];
-      $form['pass']['#attributes']['placeholder'] = $form['pass']['#title'];  
+    // Set form placeholders.
+    if ($config->get('super_login.placeholder')) {
+      $placeholders = array(
+        'name' => $config->get('super_login.login_placeholder'),
+        'pass' => $config->get('super_login.pass_placeholder'),
+      );
+      foreach ($placeholders as $field_name => $placeholder) {
+        if (empty($placeholder)) {
+          continue;
+        }
+        $form[$field_name]['#attributes']['title'] = $placeholder;
+        $form[$field_name]['#attributes']['placeholder'] = $placeholder;
+      }
     }
     
     if (!$config->get('super_login.new_account_text')){
@@ -119,7 +126,7 @@ function super_login_user_login_validate(&$form, \Drupal\Core\Form\FormStateInte
   
   if ($config->get('super_login.login_type') == 0){
     if ($form_state->getValue('name')){
-      if ($name = db_query("SELECT name FROM {users_field_data} WHERE LOWER(mail) = LOWER(:name)", array(
+      if ($name = \Drupal::database()->query("SELECT name FROM {users_field_data} WHERE LOWER(mail) = LOWER(:name)", array(
         ':name' => $form_state->getValue('name'),
       ))->fetchField()) {
         $form_state->setValue('name', array($name));
@@ -129,7 +136,7 @@ function super_login_user_login_validate(&$form, \Drupal\Core\Form\FormStateInte
   
   if ($config->get('super_login.login_type') == 2){  
     if ($form_state->getValue('name')){
-      if ($name = db_query("SELECT name FROM {users_field_data} WHERE LOWER(mail) = LOWER(:name)", array(
+      if ($name = \Drupal::database()->query("SELECT name FROM {users_field_data} WHERE LOWER(mail) = LOWER(:name)", array(
         ':name' => $form_state->getValue('name'),
       ))->fetchField()) {
         $form_state->setValue('name', array($name));

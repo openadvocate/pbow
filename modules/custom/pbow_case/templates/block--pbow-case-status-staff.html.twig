@@ -130,21 +130,35 @@
           <em>{{ case.field_case_check_party.value ?: '' }}</em>
         </div>
 
-        {% if status == 10 and case.field_case_check_all.value %}
+        {% if status == 10 %}
           <div class="row">
             <div class="col-sm-12">
 
               <div class="row">
                 <div class="col-sm-12">
-                  <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"><i class="fa fa-right-arrow" aria-hidden="true"></i> Make Available
+                  <br>
+                  <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseDelete" aria-expanded="false" aria-controls="collapseDelete"><i class="fa fa-right-arrow" aria-hidden="true"></i> Delete Case
+                  <a class="btn btn-info pull-right" role="button" data-toggle="collapse" href="#collapseAvail" aria-expanded="false" aria-controls="collapseAvail"><i class="fa fa-right-arrow" aria-hidden="true"></i> Make Available
                   </a>
+                  {% if not case.field_case_check_all.value %}
+                    <div class="pull-right text-warning" style="clear: both">Will ignore failed checks</div>
+                  {% endif %}
                 </div>
               </div>
               <div class="row">
                 <div class="col-sm-12 pt20" style="margin-top: 20px; ">
-                  <div class="collapse clearfix" id="collapseArchive">
+                  <div class="collapse clearfix" id="collapseDelete">
                     <div class="well clearfix">
-                      <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
+                      <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseDelete" aria-expanded="false" aria-controls="collapseDelete"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
+                      </a>
+                      {{ case.form.delete }}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-12 pt20" style="margin-top: 20px; ">
+                  <div class="collapse clearfix" id="collapseAvail">
+                    <div class="well clearfix">
+                      <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseAvail" aria-expanded="false" aria-controls="collapseAvail"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
                       </a>
                       {{ case.form.avail }}
                     </div>
@@ -243,6 +257,32 @@
             {% endfor %}
             {% endif %}
           </div>
+
+          {% if status == 30 %}
+            <div class="row">
+              <div class="col-sm-12">
+
+                <div class="row">
+                  <div class="col-sm-12">
+                    <a class="btn btn-default pull-right" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"><i class="fa fa-inbox" aria-hidden="true"></i> Archive
+                    </a>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 pt20" style="margin-top: 20px; ">
+                    <div class="collapse clearfix" id="collapseArchive">
+                      <div class="well clearfix">
+                        <a class="btn btn-default pull-left" role="button" data-toggle="collapse" href="#collapseArchive" aria-expanded="false" aria-controls="collapseArchive"> <i class="fa fa-close" aria-hidden="true"></i>  Cancel
+                        </a>
+                        {{ case.form.archive }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          {% endif %}
       </div>
     </div>
   </div>

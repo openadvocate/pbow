@@ -1,6 +1,7 @@
 <?php
 
 use Drupal\pbow_case\Pbow;
+use Drupal\user\Entity\User;
 use Drupal\Core\Site\Settings;
 use Drupal\node\NodeInterface;
 use Drupal\Core\Access\AccessResult;
@@ -48,6 +49,10 @@ function pbow_case_theme($existing, $type, $theme, $path) {
     ],
     'pbow_case_parties' => [
       'template' => 'block--pbow-case-parties',
+      'variables' => ['case' => NULL],
+    ],
+    'pbow_case_staff_notes' => [
+      'template' => 'block--pbow-case-staff-notes',
       'variables' => ['case' => NULL],
     ],
     'pbow_case_parties_check' => [
@@ -115,6 +120,8 @@ function pbow_case_form_alter(&$form, FormStateInterface $form_state, $form_id) 
     }
     // Hide internal fields (non user-1).
     else {
+      $form['revision']['#access'] =
+
       $form['field_case_source']  ['#access'] =
       $form['field_case_status']  ['#access'] =
       $form['field_case_assigned']['#access'] =
@@ -133,6 +140,21 @@ function pbow_case_form_alter(&$form, FormStateInterface $form_state, $form_id) 
       $form['field_case_resolve_time_spent']['#access'] =
       $form['field_case_resolve_outcome']   ['#access'] =
       $form['field_case_resolve_note']      ['#access'] = FALSE;
+    }
+
+    $current_user = User::load(\Drupal::currentUser()->id());
+    if (!$current_user->hasRole('staff')) {
+      $form['field_case_staff_notes']['#access'] = FALSE;
+    }
+
+    if (!empty($form['body'])) {
+      $form['body']['widget'][0]['#title'] = 'Case Description';
+    }
+    if (!empty($form['field_case_id'])) {
+      $form['field_case_id']['#attributes']['class'][] = 'col-sm-12';
+    }
+    if (!empty($form['field_case_partner'])) {
+      $form['field_case_partner']['#attributes']['class'][] = 'col-sm-12 fieldset-card-inside';
     }
 
     $form['#validate'][] = 'pbow_case_form_custom_validate';
@@ -265,18 +287,4 @@ function pbow_case_check_same_party($case) {
   }
 
   return 0;
-}
-
-function pbow_case_form_node_form_alter(&$form, FormStateInterface $form_state) {
-
-  if (!empty($form['body'])) {
-    $form['body']['widget'][0]['#title'] = 'Case Description';    
-  }
-  if (!empty($form['field_case_id'])) {
-    $form['field_case_id']['#attributes']['class'][] = 'col-sm-12';
-  }
-  if (!empty($form['field_case_partner'])) {
-    $form['field_case_partner']['#attributes']['class'][] = 'col-sm-12 fieldset-card-inside';
-  }
-
 }

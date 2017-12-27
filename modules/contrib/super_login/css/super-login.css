@@ -63,7 +63,7 @@ p.login-title{
 }
 
 #edit-pass{ 
-    background: #fff url("images/password-icon.svg") no-repeat 5px center;*/
+    background: #fff url("images/password-icon.svg") no-repeat 5px center;
     background-size: 1em 1em;
     text-indent:2em;
     border: 1px solid #aaa;
@@ -220,3 +220,4 @@ input[type=submit] {
     background-image: linear-gradient(to bottom, #edf5f8, #cde5ef);
     -webkit-box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
     box-shadow: inset 0 1px white, 0 1px 2px rgba(0, 0, 0, 0.15);
+}

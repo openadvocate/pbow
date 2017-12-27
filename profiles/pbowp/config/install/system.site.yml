@@ -1,8 +1,8 @@
-name: 'PRO BONO OPPORTUNITIES'
-mail: test@pbow.dev
+name: 'Pro Bono Opportunities'
+mail: test@example.com
 slogan: ''
 page:
-  403: ''
+  403: /403
   404: ''
   front: /node
 admin_compact_mode: false

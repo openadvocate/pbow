@@ -110,6 +110,7 @@ class Pbow {
     $case->set('field_case_time_assigned', NULL);
     if ($status == static::AVAILABLE) {
       $case->set('field_case_time_requested', NULL);
+      $case->set('field_case_time_available', static::now());
     }
 
     Pbow::setLog($case, ['Revoked', $revoker->getUsername(), $revoked->getUsername()]);
@@ -199,13 +200,17 @@ class Pbow {
   }
 
   public static function setUserCreatedTime($user) {
-    // Initially set monthly summary notification on
-    $user->set('field_notification', 'monthly');
+    // Initially set daily/monthly alerts on
+    $user->set('field_notification', ['daily', 'monthly']);
     $user->save();
 
     \Drupal::database()->update('users_field_data')
       ->fields(['created' => REQUEST_TIME])
       ->condition('uid', $user->id())
       ->execute();
+  }
+
+  public static function isReportTablePath() {
+    return \Drupal::request()->getpathInfo() == '/report/table';
   }
 }

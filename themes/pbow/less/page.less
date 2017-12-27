@@ -9,7 +9,8 @@
 // Case_detail_page
 // Case_management_page
 // dashboard_user_page
-
+// Taxonomy_page_styles
+// search_page_styles
 
 body.path-frontpage {
   margin: 0;
@@ -348,6 +349,15 @@ body.path-frontpage{
   }
 }
 
+// Hide Bulk Operations widget (case 55954)
+#views-form-case-management-page1-incoming,
+#views-form-case-management-page5-completed,
+#views-form-case-management-page6-archived {
+  #edit-header {
+    display: none;
+  }
+}
+
 // --------------------------------------------- dashboard_user_page
 
 .path-dashboard {
@@ -404,7 +414,7 @@ body.path-frontpage{
 }
 #edit-field-case-partner-wrapper{
   padding-top: 10px;
-  legend{
+  legend {
     border: none;
     margin: 0;
     .control-label;
@@ -413,10 +423,33 @@ body.path-frontpage{
 
 // -------------------------------- User_page
 
-.user-logged-in.path-user{
-  .fieldgroup{
-    .form-checkboxes{
-      column-count: 2;
+.user-logged-in.path-user {
+  .subscribed-tags-form {
+    .fieldgroup {
+      .form-checkboxes {
+        column-count: 2;
+      }
     }
+  }
+}
+
+// --------------------------------------------- Taxonomy_page_styles
+body.path-taxonomy {
+  .view-term-tagged-content,
+  .view-term-tagged-users {
+    li {
+      padding-bottom: 0.75em;
+    }
+  }
+}
+
+// --------------------------------------------- search_page_styles
+
+.path-search-case{
+  .views-field-body{
+    display: none;
+  }
+  .views-field-uid{
+    display: none;
   }
 }

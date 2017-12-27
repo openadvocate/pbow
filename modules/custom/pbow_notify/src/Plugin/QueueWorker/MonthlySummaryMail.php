@@ -8,6 +8,7 @@
 namespace Drupal\pbow_notify\Plugin\QueueWorker;
 
 use Drupal\Core\Queue\QueueWorkerBase;
+use Drupal\Core\Queue\SuspendQueueException;
 use Drupal\user\Entity\User;
 
 /**
@@ -19,12 +20,16 @@ use Drupal\user\Entity\User;
  *   cron = {"time" = 150}
  * )
  */
-class MonthlySummaryMail extends QueueWorkerBase {
+class MonthlySummaryMail extends AlertMailBase {
 
   /**
    * {@inheritdoc}
    */
   public function processItem($uid) {
+    if ($this->currentCount() > static::CRON_LIMIT) {
+      throw new SuspendQueueException;
+    }
+
     pbow_notify_send_mail([
       'petid' => PET_ID_MONTHLY,
       'user' => User::load($uid),

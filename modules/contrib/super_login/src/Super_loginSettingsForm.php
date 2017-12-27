@@ -1,9 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Super_login\super_loginSettingsForm
- */
 namespace Drupal\super_login;
 
 use Drupal\Core\Form\ConfigFormBase;
@@ -131,7 +127,29 @@ class super_loginSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Disable this option to remove the placeholder text within the login and password reset fields.'),
       '#default_value' =>  $config->get('super_login.placeholder'),    
     );
-        
+
+    $form['options']['placeholders'] = array(
+      '#type' => 'container',
+      '#states' => array(
+        'visible' => array(
+          ':input[name="placeholder"]' => ['checked' => TRUE],
+        ),
+      ),
+    );
+
+    $form['options']['placeholders']['login_placeholder'] = array(
+      '#type'  => 'textfield',
+      '#title' => $this->t('Login Placeholder'),
+      '#description' => $this->t('Enter the text to be displayed as placeholder for the username/email login field.'),
+      '#default_value' => $config->get('super_login.login_placeholder'),
+    );
+
+    $form['options']['placeholders']['pass_placeholder'] = array(
+      '#type'  => 'textfield',
+      '#title' => $this->t('Password Placeholder'),
+      '#description' => $this->t('Enter the text to be displayed as placeholder for the password field.'),
+      '#default_value' => $config->get('super_login.pass_placeholder'),
+    );
 
     return parent::buildForm($form, $form_state);
   }
@@ -149,11 +167,12 @@ class super_loginSettingsForm extends ConfigFormBase {
     $config->set('super_login.password_reset_title', $form_state->getValue('password_reset_title'));
     $config->set('super_login.back_link', $form_state->getValue('back_link'));    
     $config->set('super_login.css', $form_state->getValue('css'));
-    $config->set('super_login.button_image', $form_state->getValue('button_image'));
-    $config->set('super_login.autofill', $form_state->getValue('autofill'));
+    $config->set('super_login.button_theme', $form_state->getValue('button_theme'));
+    $config->set('super_login.capslock', $form_state->getValue('capslock'));
     $config->set('super_login.placeholder', $form_state->getValue('placeholder'));
     $config->set('super_login.login_type', $form_state->getValue('login_type'));
-    
+    $config->set('super_login.login_placeholder', $form_state->getValue('login_placeholder'));
+    $config->set('super_login.pass_placeholder', $form_state->getValue('pass_placeholder'));
     $config->save();
 
     parent::submitForm($form, $form_state);

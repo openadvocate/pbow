@@ -22,8 +22,6 @@ dependencies:
   - ctools
   - datetime
   - dblog
-  - devel
-  - devel_generate
   - dynamic_page_cache
   - editor
   - entity_reference
@@ -38,8 +36,7 @@ dependencies:
   - help
   - history
   - image
-  - kint
-  - layout_plugin
+  - layout_discovery
   - link
   - login_destination
   - menu_ui

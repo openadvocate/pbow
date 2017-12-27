@@ -30,6 +30,7 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_bar_id:
     weight: 3
     label: above
@@ -37,12 +38,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_bio:
     weight: 2
     label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
+    region: content
   field_case_type:
     weight: 5
     label: above
@@ -50,6 +53,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_county:
     weight: 7
     label: above
@@ -57,12 +61,14 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_notification:
     weight: 8
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_population:
     weight: 6
     label: above
@@ -70,10 +76,12 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   member_for:
     weight: 1
     settings: {  }
     third_party_settings: {  }
+    region: content
   user_picture:
     type: image
     weight: 0
@@ -82,5 +90,6 @@ content:
       image_link: content
     third_party_settings: {  }
     label: hidden
+    region: content
 hidden:
   field_notices: true

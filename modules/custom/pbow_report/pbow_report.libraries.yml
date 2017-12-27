@@ -3,3 +3,7 @@ chart:
   header: true
   js:
     vendor/Chart.min.js: {}
+pbow_report:
+  version: VERSION
+  js:
+    pbow_report.js: {}

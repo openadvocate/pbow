@@ -14,42 +14,67 @@ settings:
     rows:
       -
         -
-          name: Formatting
+          name: Tools
           items:
-            - Bold
-            - Italic
-            - Strike
-            - Superscript
-            - Subscript
+            - Source
+            - ShowBlocks
+        -
+          name: Paste
+          items:
+            - Cut
+            - Copy
+            - Paste
+            - PasteFromWord
+            - PasteText
+        -
+          name: 'Undo format'
+          items:
+            - Undo
+            - Redo
             - '-'
             - RemoveFormat
         -
-          name: Linking
-          items:
-            - DrupalLink
-            - DrupalUnlink
-        -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        -
           name: Media
           items:
-            - Blockquote
             - DrupalImage
             - Table
             - HorizontalRule
+      -
         -
           name: 'Block Formatting'
           items:
             - Format
         -
-          name: Tools
+          name: Formatting
           items:
-            - ShowBlocks
-            - Source
+            - Bold
+            - Italic
+            - Underline
+            - Strike
+            - Superscript
+            - Subscript
+            - '-'
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+            - Outdent
+            - Indent
+            - Blockquote
+        -
+          name: Align
+          items:
+            - JustifyLeft
+            - JustifyCenter
+        -
+          name: Linking
+          items:
+            - DrupalLink
+            - DrupalUnlink
   plugins:
+    language:
+      language_list: un
     stylescombo:
       styles: ''
 image_upload:
@@ -58,5 +83,5 @@ image_upload:
   directory: inline-images
   max_size: ''
   max_dimensions:
-    width: 0
-    height: 0
+    width: null
+    height: null

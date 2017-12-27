@@ -32,6 +32,20 @@ class ReportChartCaseStatus extends BlockBase {
       $this->caseStatusCount(Pbow::RESOLVED),
     ];
 
+    // Return table instead for path /report/table
+    if (Pbow::isReportTablePath()) {
+      return [
+        '#type'   => 'table',
+        '#rows'   => [
+          [['style' => 'font-weight: bold', 'data' => 'Incoming'],  $data[0]],
+          [['style' => 'font-weight: bold', 'data' => 'Available'], $data[1]],
+          [['style' => 'font-weight: bold', 'data' => 'Requested'], $data[2]],
+          [['style' => 'font-weight: bold', 'data' => 'Assigned'],  $data[3]],
+          [['style' => 'font-weight: bold', 'data' => 'Resolved'],  $data[4]],
+        ],
+      ];
+    }
+
     return [
       '#theme' => 'pbow_report_chart_case_status',
       '#data' => $data,

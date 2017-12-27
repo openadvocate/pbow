@@ -24,6 +24,7 @@ dependencies:
     - field.field.node.case.field_case_resolve_note
     - field.field.node.case.field_case_resolve_outcome
     - field.field.node.case.field_case_source
+    - field.field.node.case.field_case_staff_notes
     - field.field.node.case.field_case_status
     - field.field.node.case.field_case_status_log
     - field.field.node.case.field_case_time_assigned
@@ -53,6 +54,7 @@ content:
     weight: 101
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_case_adverse_alias:
     weight: 108
     label: above
@@ -60,6 +62,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_case_adverse_name:
     weight: 107
     label: above
@@ -67,6 +70,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_case_assigned:
     weight: 114
     label: above
@@ -74,12 +78,14 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_case_check_all:
     weight: 121
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_case_check_id:
     weight: 112
     label: above
@@ -87,6 +93,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_case_check_party:
     weight: 113
     label: above
@@ -94,6 +101,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_case_client_alias:
     weight: 106
     label: above
@@ -101,6 +109,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_case_client_name:
     weight: 105
     label: above
@@ -108,6 +117,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_case_comments:
     weight: 120
     label: above
@@ -116,6 +126,7 @@ content:
       view_mode: default
     third_party_settings: {  }
     type: comment_default
+    region: content
   field_case_deadline:
     weight: 123
     label: above
@@ -124,12 +135,14 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_details:
     weight: 131
     label: above
     settings: {  }
     third_party_settings: {  }
     type: text_default
+    region: content
   field_case_id:
     weight: 102
     label: above
@@ -137,6 +150,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
+    region: content
   field_case_partner:
     weight: 103
     label: above
@@ -144,12 +158,14 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_case_resolve_close_type:
     weight: 134
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_case_resolve_date:
     weight: 137
     label: above
@@ -158,6 +174,7 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_resolve_hours_att:
     weight: 135
     label: above
@@ -166,6 +183,7 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_integer
+    region: content
   field_case_resolve_hours_para:
     weight: 136
     label: above
@@ -174,36 +192,49 @@ content:
       prefix_suffix: true
     third_party_settings: {  }
     type: number_integer
+    region: content
   field_case_resolve_note:
     weight: 128
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_case_resolve_outcome:
     weight: 127
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_case_source:
     weight: 104
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
+  field_case_staff_notes:
+    weight: 138
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
   field_case_status:
     weight: 110
     label: above
     settings: {  }
     third_party_settings: {  }
     type: list_default
+    region: content
   field_case_status_log:
     weight: 125
     label: above
     settings: {  }
     third_party_settings: {  }
     type: basic_string
+    region: content
   field_case_time_assigned:
     weight: 118
     label: above
@@ -212,6 +243,7 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_time_available:
     weight: 116
     label: above
@@ -220,6 +252,7 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_time_completed:
     weight: 119
     label: above
@@ -228,6 +261,7 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_time_incoming:
     weight: 115
     label: above
@@ -236,6 +270,7 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_time_requested:
     weight: 117
     label: above
@@ -244,6 +279,7 @@ content:
       timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
+    region: content
   field_case_type:
     weight: 132
     label: above
@@ -251,6 +287,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_county:
     weight: 130
     label: above
@@ -258,6 +295,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_population:
     weight: 129
     label: above
@@ -265,6 +303,7 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   field_problem_code:
     weight: 133
     label: above
@@ -272,16 +311,20 @@ content:
       link: true
     third_party_settings: {  }
     type: entity_reference_label
+    region: content
   flag_case_request:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   flag_conflict_check:
     weight: 10
     settings: {  }
     third_party_settings: {  }
+    region: content
   links:
     weight: 100
     settings: {  }
     third_party_settings: {  }
+    region: content
 hidden: {  }

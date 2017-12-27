@@ -206,40 +206,49 @@ class Element extends DrupalAttributes {
   /**
    * Adds a specific Bootstrap class to color a button based on its text value.
    *
+   * @param bool $override
+   *   Flag determining whether or not to override any existing set class.
+   *
    * @return $this
    */
-  public function colorize() {
+  public function colorize($override = TRUE) {
     $button = $this->isButton();
 
     // @todo refactor this more so it's not just "button" specific.
     $prefix = $button ? 'btn' : 'has';
 
-    // Don't add a class if one is already present in the array.
+    // List of classes, based on the prefix.
     $classes = [
-      "$prefix-default", "$prefix-primary", "$prefix-success", "$prefix-info",
+      "$prefix-primary", "$prefix-success", "$prefix-info",
       "$prefix-warning", "$prefix-danger", "$prefix-link",
+      // Default should be last.
+      "$prefix-default"
     ];
 
-    foreach ($classes as $class) {
-      if ($this->hasClass($class)) {
-        if ($button && $this->getProperty('split')) {
-          $this->addClass($class, $this::SPLIT_BUTTON);
+    // Set the class to "btn-default" if it shouldn't be colorized.
+    $class = $button && !Bootstrap::getTheme()->getSetting('button_colorize') ? 'btn-default' : FALSE;
+
+    // Search for an existing class.
+    if (!$class || !$override) {
+      foreach ($classes as $value) {
+        if ($this->hasClass($value)) {
+          $class = $value;
+          break;
         }
-        return $this;
       }
     }
 
-    // Do nothing if setting is disabled.
-    if ($button && !Bootstrap::getTheme()->getSetting('button_colorize')) {
-      $this->addClass('btn-default');
-      return $this;
+    // Find a class based on the value of "value", "title" or "button_type".
+    if (!$class) {
+      $value = $this->getProperty('value', $this->getProperty('title', ''));
+      $class = "$prefix-" . Bootstrap::cssClassFromString($value, $button ? $this->getProperty('button_type', 'default') : 'default');
     }
 
-    if ($value = $this->getProperty('value', $this->getProperty('title'))) {
-      $class = "$prefix-" . Bootstrap::cssClassFromString($value, $this->getProperty('button_type', 'default'));
-      $this->addClass($class);
+    // Remove any existing classes and add the specified class.
+    if ($class) {
+      $this->removeClass($classes)->addClass($class);
       if ($button && $this->getProperty('split')) {
-        $this->addClass($class, $this::SPLIT_BUTTON);
+        $this->removeClass($classes, $this::SPLIT_BUTTON)->addClass($class, $this::SPLIT_BUTTON);
       }
     }
 
@@ -564,34 +573,50 @@ class Element extends DrupalAttributes {
   /**
    * Adds Bootstrap button size class to the element.
    *
-   * @param string $size
+   * @param string $class
    *   The full button size class to add. If none is provided, it will default
    *   to any set theme setting.
+   * @param bool $override
+   *   Flag indicating if the passed $class should be forcibly set. Setting
+   *   this to FALSE allows any existing set class to persist.
    *
    * @return $this
    */
-  public function setButtonSize($size = NULL) {
+  public function setButtonSize($class = NULL, $override = TRUE) {
     // Immediately return if element is not a button.
     if (!$this->isButton()) {
       return $this;
     }
 
-    // Don't add a class if one is already present in the array.
-    foreach (['btn-xs', 'btn-sm', 'btn-lg', 'btn-block'] as $class) {
-      if ($this->hasClass($class)) {
-        // Add the found class to any split buttons.
-        if ($this->getProperty('split')) {
-          $this->addClass($class, $this::SPLIT_BUTTON);
-        }
-        return $this;
+    // Retrieve the button size classes from the specific setting's options.
+    static $classes;
+    if (!isset($classes)) {
+      $classes = [];
+      if ($button_size = Bootstrap::getTheme()->getSettingPlugin('button_size')) {
+        $classes = array_keys($button_size->getOptions());
       }
     }
 
-    // Add any a button size.
-    if ($size = $size ?: Bootstrap::getTheme()->getSetting('button_size')) {
-      $this->addClass($size);
+    // Search for an existing class.
+    if (!$class || !$override) {
+      foreach ($classes as $value) {
+        if ($this->hasClass($value)) {
+          $class = $value;
+          break;
+        }
+      }
+    }
+
+    // Attempt to get the default button size, if set.
+    if (!$class) {
+      $class = Bootstrap::getTheme()->getSetting('button_size');
+    }
+
+    // Remove any existing classes and add the specified class.
+    if ($class) {
+      $this->removeClass($classes)->addClass($class);
       if ($this->getProperty('split')) {
-        $this->addClass($size, $this::SPLIT_BUTTON);
+        $this->removeClass($classes, $this::SPLIT_BUTTON)->addClass($class, $this::SPLIT_BUTTON);
       }
     }
 

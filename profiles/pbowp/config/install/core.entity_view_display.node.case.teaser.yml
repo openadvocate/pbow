@@ -4,6 +4,37 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - field.field.node.case.body
+    - field.field.node.case.field_case_adverse_alias
+    - field.field.node.case.field_case_adverse_name
+    - field.field.node.case.field_case_assigned
+    - field.field.node.case.field_case_check_all
+    - field.field.node.case.field_case_check_id
+    - field.field.node.case.field_case_check_party
+    - field.field.node.case.field_case_client_alias
+    - field.field.node.case.field_case_client_name
+    - field.field.node.case.field_case_comments
+    - field.field.node.case.field_case_deadline
+    - field.field.node.case.field_case_details
+    - field.field.node.case.field_case_id
+    - field.field.node.case.field_case_partner
+    - field.field.node.case.field_case_resolve_close_type
+    - field.field.node.case.field_case_resolve_date
+    - field.field.node.case.field_case_resolve_hours_att
+    - field.field.node.case.field_case_resolve_hours_para
+    - field.field.node.case.field_case_resolve_note
+    - field.field.node.case.field_case_resolve_outcome
+    - field.field.node.case.field_case_source
+    - field.field.node.case.field_case_status
+    - field.field.node.case.field_case_status_log
+    - field.field.node.case.field_case_time_assigned
+    - field.field.node.case.field_case_time_available
+    - field.field.node.case.field_case_time_completed
+    - field.field.node.case.field_case_time_incoming
+    - field.field.node.case.field_case_time_requested
+    - field.field.node.case.field_case_type
+    - field.field.node.case.field_county
+    - field.field.node.case.field_population
+    - field.field.node.case.field_problem_code
     - node.type.case
   module:
     - text
@@ -20,10 +51,16 @@ content:
     settings:
       trim_length: 600
     third_party_settings: {  }
+    region: content
   flag_case_request:
     weight: 10
+    region: content
+  flag_conflict_check:
+    weight: 10
+    region: content
   links:
     weight: 100
+    region: content
 hidden:
   field_case_adverse_alias: true
   field_case_adverse_name: true
@@ -34,14 +71,27 @@ hidden:
   field_case_client_alias: true
   field_case_client_name: true
   field_case_comments: true
+  field_case_deadline: true
+  field_case_details: true
   field_case_id: true
   field_case_partner: true
   field_case_problem_code: true
+  field_case_resolve_close_type: true
+  field_case_resolve_date: true
+  field_case_resolve_hours_att: true
+  field_case_resolve_hours_para: true
+  field_case_resolve_note: true
+  field_case_resolve_outcome: true
   field_case_source: true
   field_case_status: true
+  field_case_status_log: true
   field_case_tags: true
   field_case_time_assigned: true
   field_case_time_available: true
   field_case_time_completed: true
   field_case_time_incoming: true
   field_case_time_requested: true
+  field_case_type: true
+  field_county: true
+  field_population: true
+  field_problem_code: true

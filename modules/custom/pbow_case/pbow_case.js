@@ -20,7 +20,7 @@
         $('#requester_overlap .req-assigned-cnt').text(info.assigned);
         $('#requester_overlap .req-resolved-cnt').text(info.resolved);
         $('#requester_overlap .req-view-profile').prop('href', '/user/' + info.uid);
-        $('#requester_overlap input#edit-uid').val(info.uid);
+        $('#requester_overlap :hidden[name="uid"]').val(info.uid);
 
         $('#requester_overlap').removeClass("is_out");
         setTimeout(function(){

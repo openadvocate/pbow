@@ -1,0 +1,13 @@
+diff --git a/modules/contrib/pet/src/Controller/PetListBuilder.php b/modules/contrib/pet/src/Controller/PetListBuilder.php
+index 889ce83..28d2a7e 100644
+--- a/modules/contrib/pet/src/Controller/PetListBuilder.php
++++ b/modules/contrib/pet/src/Controller/PetListBuilder.php
+@@ -33,7 +33,7 @@ public function render() {
+       )),
+     );
+     $build['add_pet'] = array(
+-      '#markup' => t('<p><a href="@addpet">Add previewable email template<a/></p>', array(
++      '#markup' => t('<p><a href="@addpet">Add previewable email template</a></p>', array(
+         '@addpet' => \Drupal::url('pet.add'),
+       )),
+ 

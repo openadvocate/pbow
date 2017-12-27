@@ -6,7 +6,7 @@ _core:
 id: feedback
 label: 'Contact form for Attorneys'
 recipients:
-  - test@pbow.dev
+  - test@example.com
 reply: ''
 weight: 0
 message: 'Your message has been sent.'

@@ -1,0 +1,91 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - page_manager.page.report_table
+  module:
+    - panels
+    - pbow_report
+id: report_table-panels_variant-0
+label: Panels
+variant: panels_variant
+variant_settings:
+  blocks:
+    02a590e4-be73-4802-a2b6-8a43fce70cfd:
+      id: pbow_report_chart_cases_by_population
+      label: 'Cases/Users By Population'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: 1
+      uuid: 02a590e4-be73-4802-a2b6-8a43fce70cfd
+      context_mapping: {  }
+    12bd82ff-1284-4d7a-9ba5-d79a80a46fb2:
+      id: pbow_report_chart_activated_accounts
+      label: 'PBOW Report - Activated Accounts'
+      provider: pbow_report
+      label_display: '0'
+      region: left
+      weight: -2
+      uuid: 12bd82ff-1284-4d7a-9ba5-d79a80a46fb2
+      context_mapping: {  }
+    c4f48ba8-f496-469b-9cc1-594bc6f5b8f4:
+      id: pbow_report_chart_user_engagement
+      label: 'User Engagement'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: -1
+      uuid: c4f48ba8-f496-469b-9cc1-594bc6f5b8f4
+      context_mapping: {  }
+    467aeb3c-55e7-46bd-9c3b-12940dca1704:
+      id: pbow_report_chart_case_status
+      label: 'Case Status'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: 0
+      uuid: 467aeb3c-55e7-46bd-9c3b-12940dca1704
+      context_mapping: {  }
+    e751a830-58f8-4fc2-981b-51affba81bb0:
+      id: pbow_report_chart_cases_by_type
+      label: 'Cases/Users By Type'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: 2
+      uuid: e751a830-58f8-4fc2-981b-51affba81bb0
+      context_mapping: {  }
+    af3d5445-4c7a-4625-af2b-c8d6ed00ecc3:
+      id: pbow_report_chart_cases_by_county
+      label: 'Cases/Users By County'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: 3
+      uuid: af3d5445-4c7a-4625-af2b-c8d6ed00ecc3
+      context_mapping: {  }
+    a5d246e5-ddd4-4e51-93b5-64cf18e72bc8:
+      id: pbow_report_chart_user_alerts
+      label: 'Alert Settings for Activated Accounts'
+      provider: pbow_report
+      label_display: visible
+      region: left
+      weight: 0
+      uuid: a5d246e5-ddd4-4e51-93b5-64cf18e72bc8
+      context_mapping: {  }
+  id: panels_variant
+  uuid: 8a008fd1-8744-4765-96d3-606c628c8ca2
+  label: null
+  weight: 0
+  layout: bootstrap_2col_8_4
+  layout_settings: {  }
+  page_title: 'Report - Table'
+  storage_type: page_manager
+  storage_id: report_table-panels_variant-0
+  builder: standard
+page: report_table
+weight: 0
+selection_criteria: {  }
+selection_logic: and
+static_context: {  }

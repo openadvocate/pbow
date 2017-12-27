@@ -57,6 +57,11 @@ class CaseMakeAvailableForm extends FormBase {
     $case = \Drupal::routeMatch()->getParameter('node');
     $user = \Drupal::currentUser()->getUsername();
 
+    // Ignore failed check (set to pass) and make Case available
+    if (!$case->field_case_check_all->value) {
+      $case->set('field_case_check_all', 1);
+    }
+
     $case->set('field_case_status', Pbow::AVAILABLE);
     $case->set('field_case_time_available', Pbow::now());
     Pbow::setLog($case, ['Available', $user]);

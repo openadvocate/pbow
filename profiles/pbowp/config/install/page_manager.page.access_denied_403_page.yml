@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: access_denied_403_page
+label: 'Access denied (403) page'
+description: ''
+use_admin_theme: false
+path: /403
+access_logic: and
+access_conditions: {  }
+parameters: {  }

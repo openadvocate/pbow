@@ -8,10 +8,10 @@ label: 'Anonymous user'
 weight: 0
 is_admin: false
 permissions:
-  - 'access content'
-  - 'use text format restricted_html'
   - 'access comments'
+  - 'access content'
   - 'access site-wide contact form'
-  - 'search content'
-  - 'restful post pbow_post_cases'
   - 'restful get pbow_case_status'
+  - 'restful post pbow_post_cases'
+  - 'search content'
+  - 'use text format restricted_html'

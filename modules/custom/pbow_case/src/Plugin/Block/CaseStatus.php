@@ -8,6 +8,7 @@ namespace Drupal\pbow_case\Plugin\Block;
 
 use Drupal\pbow_case\Pbow;
 use Drupal\Core\Block\BlockBase;
+use Drupal\pbow_case\Form\CaseDeleteForm;
 use Drupal\pbow_case\Form\CaseRevokeForm;
 use Drupal\pbow_case\Form\CaseArchiveForm;
 use Drupal\pbow_case\Form\CaseResolveForm;
@@ -37,6 +38,7 @@ class CaseStatus extends BlockBase {
       $builder = \Drupal::formBuilder();
       $case->form = [
         'avail'   => $builder->getForm(CaseMakeAvailableForm::class),
+        'delete'  => $builder->getForm(CaseDeleteForm::class),
         'archive' => $builder->getForm(CaseArchiveForm::class),
         'assign'  => $case->field_case_status->value == Pbow::REQUESTED
                    ? $builder->getForm(CaseAssignOverlapForm::class)

@@ -22,7 +22,9 @@ class CaseBody extends BlockBase {
 
   protected $case;
 
-  public function __construct() {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+
     $this->case = \Drupal::routeMatch()->getParameter('node');
   }
 

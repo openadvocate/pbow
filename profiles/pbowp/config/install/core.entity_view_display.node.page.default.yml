@@ -22,12 +22,15 @@ content:
     weight: 100
     settings: {  }
     third_party_settings: {  }
+    region: content
   field_attachment:
     weight: 102
     label: above
     settings: {  }
     third_party_settings: {  }
     type: file_default
+    region: content
   links:
     weight: 101
+    region: content
 hidden: {  }

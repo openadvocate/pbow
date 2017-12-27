@@ -41,17 +41,29 @@ function pbow_report_theme($existing, $type, $theme, $path) {
       'template' => 'block--pbow-report-user-engagement',
       'variables' => ['data' => NULL],
     ],
+    'pbow_report_chart_user_alerts' => [
+      'template' => 'block--pbow-report-user-alerts',
+      'variables' => ['data' => NULL],
+    ],
+    'pbow_report_table' => [
+      'template' => 'block--pbow-report-table',
+      'variables' => ['data' => NULL],
+    ],
   ];
 }
 
-function pbow_report_page_attachments_alter(&$vars){
+/**
+ * Implements hook_page_attachments().
+ */
+function pbow_report_page_attachments(array &$page) {
   // get current path
   $current_path = Drupal::request()->getRequestUri();
 
-  // check for a path
-  if (!empty($current_path) && (substr( $current_path, 0, 7 ) === "/report")) {
-    // attach our library
-    $vars['#attached']['library'][] = 'pbow_report/chart';
+  if ($current_path == '/report') {
+    $page['#attached']['library'][] = 'pbow_report/chart';
+    $page['#attached']['library'][] = 'pbow_report/pbow_report';
   }
-
+  elseif ($current_path == '/report/table') {
+    $page['#attached']['library'][] = 'pbow_report/pbow_report';
+  }
 }

@@ -111,7 +111,11 @@ class PostCasesResource extends ResourceBase {
     return new ResourceResponse(['result' => 'OK', 'message' => $message]);
   }
 
-  protected function checkPost($post) {
+  /**
+   * @param post
+   *   Call by reference in order to parse and update values (county).
+   */
+  protected function checkPost(&$post) {
     if (!is_array($post) or empty($post[0])) {
       return "Array of cases expected.";
     }
@@ -126,7 +130,7 @@ class PostCasesResource extends ResourceBase {
       return $val->name;
     }, $tree);
 
-    foreach ($post as $item) {
+    foreach ($post as &$item) {
       // Check required fields.
       if (empty($item['title'])) {
         return "Case title is required.";
@@ -181,6 +185,21 @@ class PostCasesResource extends ResourceBase {
         }
       }
 
+      if (!empty($item['counties'])) {
+        $result = $this->parseCountyNamesToTids($item['counties']);
+
+        if (isset($result['error'])) {
+          return $result['error'];
+        }
+        else {
+          $item['counties'] = $result;
+        }
+      }
+
+      if (isset($item['staff_notes']) and strlen($item['staff_notes']) > 2000) {
+        return "Staff notes length may not exceed 2000 chars.";
+      }
+
       // Check partner name.
       if (!in_array($item['partner'], $partners)) {
         return "'$item[partner]' partner name not recognized.";
@@ -224,7 +243,7 @@ class PostCasesResource extends ResourceBase {
         'type'               => 'case',
         'uid'                => $uid,
         'title'              => $item['title'],
-        'body'               => $item['description'],
+        'body'               => _filter_autop($item['description']),
         'field_case_source'  => 'api',
         'field_case_id'      => $item['case_id'],
         'field_case_partner' => $partner_tids[$item['partner']],
@@ -232,8 +251,9 @@ class PostCasesResource extends ResourceBase {
         'field_case_client_alias'  => !empty($item['client_alias']) ? $item['client_alias'] : NULL,
         'field_case_adverse_name'  => $item['adverse_party_name'],
         'field_case_adverse_alias' => !empty($item['adverse_party_alias']) ? $item['adverse_party_alias'] : NULL,
-        // 'field_case_problem_code'  => $item[''],
-        'field_case_deadline' => !empty($item['deadline']) ? $item['deadline'] : NULL,
+        'field_case_deadline'    => !empty($item['deadline']) ? $item['deadline'] : NULL,
+        'field_county'           => $item['counties'],
+        'field_case_staff_notes' => _filter_autop($item['staff_notes']),
       ]);
 
       $case->save();
@@ -252,5 +272,29 @@ class PostCasesResource extends ResourceBase {
     }
 
     return in_array($case_id, $case_ids);
+  }
+
+  protected function parseCountyNamesToTids($array) {
+    static $counties;
+
+    if (empty($counties)) {
+      $tree = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadTree('county');
+      $counties = array_reduce($tree, function ($result, $item) {
+        $result[$item->name] = $item->tid;
+        return $result;
+      }, array());
+    }
+
+    $tids = [];
+    foreach ($array as $name) {
+      if (isset($counties[$name])) {
+        $tids[] = $counties[$name];
+      }
+      else {
+        return ['error' => 'Unknown county name: ' . $name];
+      }
+    }
+
+    return $tids;
   }
 }

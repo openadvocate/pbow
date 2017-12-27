@@ -11,7 +11,7 @@ field_name: field_notification
 entity_type: user
 bundle: user
 label: Notification
-description: ''
+description: 'If you are not receiving email notifications, you may need to allow the email address test@example.com in your email system filter settings.'
 required: false
 translatable: false
 default_value: {  }
