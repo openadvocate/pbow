@@ -11,11 +11,11 @@ INSTALLATION
 
 2. Verify requirements: Some minor warnings may be ignored -- like one for Opcache, which is good for production environment, but not necessary during development. Proceed with "continue anyway" at the bottom of the page if necessary.
 
-3. Set up database: Enter database info. Create database if not already done
+3. Set up database: Enter database information. Create the database if not already done.
 
-4. Install site: wait while it installs modules and themes
+4. Install site: Wait while it installs modules and themes.
 
-5. Configure site: Enter your information to create the admin user
+5. Configure site: Enter your information to create the admin user.
 
 
 CONFIGURATION
@@ -40,7 +40,7 @@ These are suggested menu items for navigation_admin menu (/admin/structure/menu/
 PET templates
 -------------
 
-Configure Previewable Email Templates (PET) at /admin/structure/pets. PET ID number is significant, so the order of these templates is important.
+Configure Previewable Email Templates (PET) at /admin/structure/pets. PET ID number is significant, so the order of the templates is important.
 
 ### PET 1
 - Title: Password reset for activating user
